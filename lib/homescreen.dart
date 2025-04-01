@@ -1,13 +1,12 @@
-import 'package:eng_app_2/practice_activity_screen_1.dart';
-import 'package:eng_app_2/pre_class_activity_screen.dart';
-import 'package:eng_app_2/quiz_screen.dart';
-import 'package:eng_app_2/summary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'in_class_activity_screen.dart';
+import 'introduction_screen.dart';
+import 'pre_class_activity_screen.dart';
 import 'instructions_screen.dart';
-import 'introduction_screen.dart'; // import your screens for each unit
-// Add imports for other unit screens here...
+import 'practice_activity_screen_1.dart';
+import 'quiz_screen.dart';
+import 'in_class_activity_screen.dart';
+import 'summary_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String username;
@@ -20,26 +19,38 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final box = GetStorage();
 
-  // List of unit topics
   final List<String> unitTitles = [
-    "Introduction to the program and getting to know each other",
-    "Basic grammar skills",
-    "Tenses",
-    "Essential study skills",
-    "Academic discussion and viva preparation",
-    "Communication strategies",
-    "Context-Based Vocabulary Development",
-    "Structuring ideas for academic discussions",
-    "Making academic presentations",
-    "Enhancing coherence and logical flow",
-    "Mastering Oral Exams & Viva Voce",
-    "Reflection and self-improvement in academic communication"
+    "Introduction & Getting Started",
+    "Basic Grammar Skills",
+    "Tenses Mastery",
+    "Study Skills Essentials",
+    "Academic Discussions & Viva",
+    "Communication Strategies",
+    "Vocabulary Development",
+    "Structuring Ideas for Discussions",
+    "Effective Academic Presentations",
+    "Logical Flow & Coherence",
+    "Mastering Oral Exams & Viva",
+    "Reflection & Self-Improvement"
   ];
 
-  // List to track which units are unlocked
+  final List<IconData> unitIcons = [
+    Icons.school,
+    Icons.book,
+    Icons.history_edu,
+    Icons.lightbulb,
+    Icons.record_voice_over,
+    Icons.forum,
+    Icons.spellcheck,
+    Icons.account_tree,
+    Icons.present_to_all,
+    Icons.timeline,
+    Icons.mic,
+    Icons.assessment,
+  ];
+
   List<bool> unitUnlocked = List.generate(12, (index) => index == 0);
 
-  // Function to unlock next unit
   void _unlockNextUnit(int index) {
     if (index < 11) {
       setState(() {
@@ -48,55 +59,52 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // Function to navigate to the respective unit screen
   void _navigateToUnit(int index) {
     if (unitUnlocked[index]) {
-      // Navigate based on the index
       Widget screen;
       switch (index) {
         case 0:
-          screen = IntroductionScreen(unitIndex:index);
+          screen = IntroductionScreen(unitIndex: index);
           break;
         case 1:
-          screen = PreClassActivityScreen(unitIndex: index,);
+          screen = PreClassActivityScreen(unitIndex: index);
           break;
         case 2:
-          screen = InstructionsScreen(unitIndex: index,);
+          screen = InstructionsScreen(unitIndex: index);
           break;
         case 3:
-          screen = PracticeActivityScreen(unitIndex: index,);
+          screen = PracticeActivityScreen(unitIndex: index);
           break;
         case 4:
-          screen = QuizScreen(unitIndex: index,);
+          screen = QuizScreen(unitIndex: index);
           break;
         case 5:
-          screen = InClassActivityScreen(unitIndex: index,);
+          screen = InClassActivityScreen(unitIndex: index);
           break;
         case 6:
-          screen = SummaryScreen(unitIndex: index,);
+          screen = SummaryScreen(unitIndex: index);
           break;
-      // Add more cases for each unit
         default:
-          screen = IntroductionScreen(unitIndex:index); // Default screen
+          screen = IntroductionScreen(unitIndex: index);
       }
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => screen),
       );
-      _unlockNextUnit(index); // Unlock the next unit after opening
+      _unlockNextUnit(index);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Background color
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           "Welcome, ${widget.username}!",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        backgroundColor: Color(0xFF010066), // Deep Blue
+        backgroundColor: Color(0xFF010066),
         elevation: 0,
       ),
       body: Padding(
@@ -104,55 +112,52 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Welcome text
             Text(
               "Your Learning Journey 📚",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF010066),
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF010066)),
             ),
             SizedBox(height: 10),
-
-            // Scrollable List of Units
             Expanded(
-              child: ListView.builder(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 1.2,
+                ),
                 itemCount: unitTitles.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () => _navigateToUnit(index),
                     child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 8),
-                      padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(
                         color: unitUnlocked[index] ? Color(0xFF010066) : Colors.grey.shade400,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(15),
                         boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 5,
-                            offset: Offset(2, 2),
-                          )
+                          BoxShadow(color: Colors.black12, blurRadius: 5, offset: Offset(2, 2)),
                         ],
                       ),
-                      child: Row(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
-                            radius: 20,
+                            radius: 30,
                             backgroundColor: unitUnlocked[index] ? Color(0xFFFF6100) : Colors.grey,
                             child: Icon(
-                              unitUnlocked[index] ? Icons.lock_open : Icons.lock,
+                              unitIcons[index],
+                              size: 35,
                               color: Colors.white,
                             ),
                           ),
-                          SizedBox(width: 12),
-                          Expanded(
+                          SizedBox(height: 10),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               unitTitles[index],
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),

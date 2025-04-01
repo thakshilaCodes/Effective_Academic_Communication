@@ -1,14 +1,14 @@
 flutter_native_splash:
   color: "#FFFFFF"  # White Background
-  color_dark: "#042a49"
-  image: assets/logo.png
-  image_dark: assets/logo.png  # Same image for dark mode (adjust if needed)
+  color_dark: "#000000"
+  image: assets/logoNew2.png
+  image_dark: assets/BlackLogo.png
   branding_mode: bottom  # Positions branding at the bottom
 
   android_12:
     color: "#FFFFFF"  # White Background
-    image: assets/logo.png
-    image_dark: assets/logo.png
+    image: assets/logoNew2.png
+    image_dark: assets/BlackLogo.png
 
 
   android: true

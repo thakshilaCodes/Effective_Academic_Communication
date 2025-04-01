@@ -15,7 +15,6 @@ class InstructionsScreen extends StatefulWidget {
 class _InstructionsScreenState extends State<InstructionsScreen> {
   FlutterTts flutterTts = FlutterTts();
   late YoutubePlayerController _controller;
-  bool _isVideoInitialized = false;
 
   @override
   void initState() {
@@ -32,67 +31,54 @@ class _InstructionsScreenState extends State<InstructionsScreen> {
     await flutterTts.speak(units[widget.unitIndex].instructionsText);
   }
 
-  void _playVideo() {
-    setState(() {
-      _isVideoInitialized = true;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final unit = units[widget.unitIndex];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Instructions"),
+        title: Text("Instructions", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
         backgroundColor: Color(0xFF010066),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                unit.instructionsText,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black87),
-              ),
-              SizedBox(height: 20),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Instructions Text
+            Text(
+              unit.instructionsText,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black87),
+            ),
+            SizedBox(height: 20),
 
-              _isVideoInitialized
-                  ? YoutubePlayer(controller: _controller)
-                  : ElevatedButton(
-                onPressed: _playVideo,
+            // YouTube Video Player
+            YoutubePlayer(controller: _controller),
+
+            Spacer(),
+
+            // Next Button at the Bottom Center
+            Align(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PracticeActivityScreen(unitIndex: widget.unitIndex),
+                    ),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFFF6100),
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  backgroundColor: Color(0xFF010066),
+                  padding: EdgeInsets.symmetric(vertical: 14, horizontal: 32),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: Text("Play Video", style: TextStyle(fontSize: 16, color: Colors.white)),
+                child: Text("Next: Practice Activity", style: TextStyle(fontSize: 18, color: Colors.white)),
               ),
-
-              SizedBox(height: 30),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PracticeActivityScreen(unitIndex: widget.unitIndex),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF010066),
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                  ),
-                  child: Text("Next: Practice Activity", style: TextStyle(fontSize: 16, color: Colors.white)),
-                ),
-              ),
-            ],
-          ),
+            ),
+            SizedBox(height: 20), // Add space below button
+          ],
         ),
       ),
     );

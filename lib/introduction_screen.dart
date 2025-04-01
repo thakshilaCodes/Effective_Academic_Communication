@@ -13,30 +13,16 @@ class IntroductionScreen extends StatefulWidget {
 
 class _IntroductionScreenState extends State<IntroductionScreen> {
   FlutterTts flutterTts = FlutterTts();
-  List<String> wordChunks = [];
-  PageController _pageController = PageController();
-  int currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _prepareText();
-    _speakText(wordChunks[0]);
+    _speakText();
   }
 
-  void _prepareText() {
-    final unit = units[widget.unitIndex];
-    List<String> words = unit.introductionText.split(' ');
-    for (int i = 0; i < words.length; i += 60) {
-      wordChunks.add(words.sublist(i, i + 60 > words.length ? words.length : i + 60).join(' '));
-    }
-  }
-
-  void _speakText(String text) async {
-    await flutterTts.stop();
+  void _speakText() async {
     await flutterTts.setLanguage("en-US");
-    await flutterTts.setSpeechRate(0.4);
-    await flutterTts.speak(text);
+    await flutterTts.speak(units[widget.unitIndex].introductionText);
   }
 
   @override
@@ -45,11 +31,9 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          unit.unitName,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-        ),
+        title: Text(unit.unitName, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,)),
         backgroundColor: Color(0xFF010066),
+        elevation: 0,
       ),
       body: Container(
         color: Colors.white,
@@ -57,60 +41,34 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
         child: Column(
           children: [
             Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: wordChunks.length,
-                onPageChanged: (index) {
-                  setState(() => currentIndex = index);
-                  _speakText(wordChunks[index]);
-                },
-                itemBuilder: (context, index) {
-                  return Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        wordChunks[index],
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 22, color: Colors.black87),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Introduction",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF010066),
                       ),
                     ),
-                  );
-                },
+                    SizedBox(height: 10),
+                    Text(
+                      unit.introductionText,
+                      style: TextStyle(fontSize: 18, color: Colors.black87),
+                    ),
+                    SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
-
-            // Navigation Controls
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.blue, size: 32),
-                  onPressed: currentIndex > 0
-                      ? () => _pageController.previousPage(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  )
-                      : null,
-                ),
-                IconButton(
-                  icon: Icon(Icons.arrow_forward, color: Colors.blue, size: 32),
-                  onPressed: currentIndex < wordChunks.length - 1
-                      ? () => _pageController.nextPage(
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  )
-                      : null,
-                ),
-              ],
-            ),
-
-            // Next Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFFF6100),
-                  padding: EdgeInsets.symmetric(vertical: 18),
+                  padding: EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -125,7 +83,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                 },
                 child: Text(
                   "Next: Pre-Class Activity",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ),
             ),

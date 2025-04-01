@@ -31,19 +31,22 @@ class _PracticeActivityScreenState extends State<PracticeActivityScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Practice Activity"),
+        title: Text("Practice Activity", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
         backgroundColor: Color(0xFF010066),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Activity Description
             Text(
               unit.practiceActivityDescription1,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
+
+            // Activity Content
             Container(
               padding: EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -56,43 +59,47 @@ class _PracticeActivityScreenState extends State<PracticeActivityScreen> {
                 style: TextStyle(fontSize: 16, color: Colors.black),
               ),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF6100),
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-              ),
-              onPressed: () {
-                // Implement file upload functionality here
-              },
-              child: Text("Upload Answers", style: TextStyle(fontSize: 16, color: Colors.white)),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF6100),
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-              ),
-              onPressed: () {
-                // Implement file upload functionality here
-              },
-              child: Text("Submit", style: TextStyle(fontSize: 16, color: Colors.white)),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF010066),
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PracticeActivityScreen2(unitIndex: widget.unitIndex),
+
+            Spacer(), // Pushes the buttons to the bottom
+
+            // Buttons at the Bottom
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                // Upload Answers Button (Linked to practiceUploadLink)
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFFF6100),
+                    padding: EdgeInsets.symmetric(vertical: 14, horizontal: 32),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
-                );
-              },
-              child: Text("Next: Practice Activity 2", style: TextStyle(fontSize: 16, color: Colors.white)),
+                  onPressed: () {
+                    // Open the upload link using Navigator (Assuming it's a route)
+                    Navigator.pushNamed(context, unit.practiceUploadLink);
+                  },
+                  child: Text("Upload Answers", style: TextStyle(fontSize: 16, color: Colors.white)),
+                ),
+                SizedBox(height: 10),
+
+                // Next Button
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF010066),
+                    padding: EdgeInsets.symmetric(vertical: 14, horizontal: 32),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PracticeActivityScreen2(unitIndex: widget.unitIndex),
+                      ),
+                    );
+                  },
+                  child: Text("Next: Practice Activity 2", style: TextStyle(fontSize: 16, color: Colors.white)),
+                ),
+                SizedBox(height: 20), // Extra spacing at the bottom
+              ],
             ),
           ],
         ),

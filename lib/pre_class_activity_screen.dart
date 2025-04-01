@@ -31,7 +31,7 @@ class _PreClassActivityScreenState extends State<PreClassActivityScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pre-Class Activity"),
+        title: Text("Pre-Class Activity", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,)),
         backgroundColor: Color(0xFF010066),
       ),
       body: SingleChildScrollView(

@@ -17,18 +17,23 @@ Now, let’s discuss the structure of the course.
 
 
 Step 1 – Introduce yourself in 3-4 sentences, including your name, academic background, interests, and life goals. Keep it simple!
+
 Step 2 – Use ChatGPT to ask for feedback on your introduction. Then, let the AI tool generate a sample introduction.
+
 Step 3 – Practice your self-introduction again and check for grammar errors and clarity using Grammarly (free version available).
+
 Step 4 – Write your self-introduction in the given space so we can get to know you!
     """,
     submissionLink: "https://courseweb.sliit.lk/upload1",
-    practiceActivityDescription1: """"
+    practiceActivityDescription1: """
     After watching the brief recorded session, we hope you receive a good understanding of how you introduce yourself in different ways. Now, it’s time to do an individual activity to practice what you learnt. You can simply follow the steps given.
     """,
     practiceActivity: """
 
 • Step 1: Record a 30-second video or audio introducing yourself.
+
 • Step 2: Use Speechify or NaturalReader to listen to your introduction and check your pronunciation.
+
 • Step 3: Upload your final recording to the given submission link.
     """,
 
@@ -52,16 +57,16 @@ By now, you should have a basic idea of what we will discuss in the first lesson
     ],
     quizOptions: [
       [
-        "A) Hey, what's up?",
-        "B) Hi, I'm Sahan. I specialize in software engineering.",
-        "C) Yo, call me Sanz!",
-        "D) Guess who I am?"
+        "1) Hey, what's up?",
+        "2) Hi, I'm Sahan. I specialize in software engineering.",
+        "3) Yo, call me Sanz!",
+        "4) Guess who I am?"
       ],
       [
-        "A) Hey there!",
-        "B) Good morning, Ms. Kulasekara.",
-        "C) What's up?",
-        "D) Yo dude!"
+        "1) Hey there!",
+        "2) Good morning, Ms. Kulasekara.",
+        "3) What's up?",
+        "4) Yo dude!"
       ],
     ],
     correctAnswers: [1, 1],

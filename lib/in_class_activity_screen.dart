@@ -18,9 +18,10 @@ class _InClassActivityScreenState extends State<InClassActivityScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("In-Class Activity"),
+        title: Text("In-Class Activity", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,)),
         backgroundColor: Color(0xFF010066), // AppBar color
         centerTitle: true,
+
       ),
       body: Container(
         color: Colors.white, // Background color of the screen

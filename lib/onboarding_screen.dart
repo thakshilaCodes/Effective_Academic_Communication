@@ -19,13 +19,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
               buildPage(
                 image: 'assets/onboarding/ob1.jpg',
-                title: 'Learn English Easily',
-                description: 'Improve your vocabulary and grammar with simple lessons.',
+                title: '🗣️ Speak Like a Pro!',
+                description: 'Tired of sounding like a robot? 🤖 Let’s fix that! Our app will help you master English pronunciation, one word at a time. Get ready to talk like a native and impress everyone! 🎤✨',
               ),
               buildPage(
-                image: 'assets/onboarding/ob2.jpg',
-                title: 'Practice Speaking',
-                description: 'Engage in real-time conversations and enhance your fluency.',
+                image: 'assets/onboarding/ob5.png',
+                title: '👂 Listen, Laugh & Learn!',
+                description: 'Who said grammar and pronunciation have to be boring? 🤓🎉 We’ve packed this app with hilarious examples, fun challenges, and real-world practice. Get ready to laugh and learn! 😆📚',
               ),
             ],
           ),

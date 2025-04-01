@@ -20,7 +20,7 @@ class SummaryScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Lesson Summary"),
+        title: Text("Lesson Summary", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,)),
         backgroundColor: Color(0xFF010066), // Color for app bar
         centerTitle: true,
       ),

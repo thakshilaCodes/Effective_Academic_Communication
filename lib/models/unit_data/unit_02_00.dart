@@ -32,7 +32,9 @@ By the end of this lesson, you will be able to:
 Step 01: Click on the given link and you will be directed to a website with a quiz.
 
 Step 02: Enter your name and click on “start game”. Select the correct answer for all the questions.
+
 Step 03: After finishing the quiz, click on “Skip to summary” and take a screenshot of the ‘Performance Stats’.
+
 Step 04: Upload the screenshot to the submission portal. 
    """,
 

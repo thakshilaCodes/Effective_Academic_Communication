@@ -1,80 +1,166 @@
 import 'package:flutter/material.dart';
-import 'models/all_units.dart';
-import 'models/unit_data/unit_01_00.dart';
-import 'in_class_activity_screen.dart'; // Import the InClassActivityScreen
-import 'package:flutter_tts/flutter_tts.dart'; // Import text-to-speech package
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:eng_app_2/models/unit_model.dart';
+import 'package:eng_app_2/in_class_activity_screen.dart';
 
-class SummaryScreen extends StatelessWidget {
+class SummaryScreen extends StatefulWidget {
   final int unitIndex;
-  SummaryScreen({required this.unitIndex});
+  final int subunitIndex;
+  final String subunitTitle;
+  final UnitModel? unitData;
 
-  final FlutterTts _flutterTts = FlutterTts(); // Initialize text-to-speech
+  const SummaryScreen({
+    Key? key,
+    required this.unitIndex,
+    required this.subunitIndex,
+    required this.subunitTitle,
+    this.unitData,
+  }) : super(key: key);
 
-  // Function to speak the summary text
+  @override
+  _SummaryScreenState createState() => _SummaryScreenState();
+}
+
+class _SummaryScreenState extends State<SummaryScreen> {
+  final FlutterTts _flutterTts = FlutterTts();
+  bool _isSpeaking = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _setupTts();
+  }
+
+  void _setupTts() async {
+    await _flutterTts.setLanguage("en-US");
+    await _flutterTts.setSpeechRate(0.4);
+    await _flutterTts.setPitch(1.0);
+
+    _flutterTts.setCompletionHandler(() {
+      setState(() {
+        _isSpeaking = false;
+      });
+    });
+  }
+
   Future<void> _speakSummary(String text) async {
-    await _flutterTts.speak(text);
+    if (_isSpeaking) {
+      await _flutterTts.stop();
+      setState(() {
+        _isSpeaking = false;
+      });
+    } else if (text.isNotEmpty) {
+      setState(() {
+        _isSpeaking = true;
+      });
+      await _flutterTts.speak(text);
+    }
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final unit = units[unitIndex];
+    final unit = widget.unitData;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Lesson Summary", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,)),
-        backgroundColor: Color(0xFF010066), // Color for app bar
+        title: Text(
+          widget.subunitTitle,
+          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        backgroundColor: const Color(0xFF010066),
         centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Container(
-        color: Colors.white, // Set background to white
-        padding: EdgeInsets.all(16.0),
+      body: unit == null || unit.summary.isEmpty
+          ? const Center(
+        child: Text(
+          "No summary available.",
+          style: TextStyle(fontSize: 18, color: Colors.grey),
+        ),
+      )
+          : Container(
+        color: Colors.white,
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Summary text
-            Text(
-              unit.summary,
-              style: TextStyle(fontSize: 18, color: Colors.black),
+            const Text(
+              "Lesson Summary",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF010066),
+              ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 10),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Text(
+                  unit.summary,
+                  style: const TextStyle(fontSize: 18, color: Colors.black87),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
             // Button to activate text-to-speech for summary
             ElevatedButton(
               onPressed: () => _speakSummary(unit.summary),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF6100), // Button color
-                padding: EdgeInsets.symmetric(vertical: 14, horizontal: 30),
+                backgroundColor: const Color(0xFFFF6100),
+                padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                elevation: 5,
+                minimumSize: const Size(double.infinity, 50),
               ),
               child: Text(
-                "Listen to Summary",
-                style: TextStyle(fontSize: 18, color: Colors.white),
+                _isSpeaking ? "Stop Listening" : "Listen to Summary",
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // "Next" button to go to the InClassActivityScreen
             ElevatedButton(
               onPressed: () {
+                _flutterTts.stop();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => InClassActivityScreen(unitIndex: unitIndex),
+                    builder: (context) => InClassActivityScreen(
+                      unitIndex: widget.unitIndex,
+                      subunitIndex: widget.subunitIndex,
+                      subunitTitle: widget.subunitTitle,
+                      unitData: widget.unitData,
+                    ),
                   ),
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFF6100), // Button color
-                padding: EdgeInsets.symmetric(vertical: 14, horizontal: 30),
+                backgroundColor: const Color(0xFF010066),
+                padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                elevation: 5,
+                minimumSize: const Size(double.infinity, 50),
               ),
-              child: Text(
-                "Next",
-                style: TextStyle(fontSize: 18, color: Colors.white),
+              child: const Text(
+                "Next: In-Class Activity",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

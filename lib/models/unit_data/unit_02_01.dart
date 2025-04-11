@@ -15,12 +15,11 @@ By the end of this lesson, you will be able to:
 
     """,
     preClassActivityDescription: """
-    You will be given a list of jumbled sentences. Arrange the words in the correct order to form meaning sentences. Refer to the example given and complete the task accordingly.
+You will be given a list of jumbled sentences. Arrange the words in the correct order to form meaning sentences. Refer to the example given and complete the task accordingly.
+
 Example:
 Debugging/good/is/practice
 Debugging is good practice. 
-(Answers must be submitted before the main lesson begins)
-
      """,
 
     preClassQuestions: [

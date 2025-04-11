@@ -7,7 +7,6 @@ import 'onboarding_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init(); // Initialize GetStorage
-
   runApp(const MyApp());
 }
 
@@ -17,14 +16,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final box = GetStorage();
-    bool isFirstTime = box.read('first_time') ?? true; // Default: true
-    String? username = box.read('username'); // Retrieve saved username
+    bool isFirstTime = box.read('first_time') ?? true; // Show onboarding if first time
+    String? username = box.read('username'); // Read saved username
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: isFirstTime
-          ? '/onboarding'  // If first time, show onboarding
-          : (username == null ? '/login' : '/home'), // Otherwise, check login
+          ? '/onboarding'
+          : (username == null ? '/login' : '/home'),
 
       routes: {
         '/onboarding': (context) => OnboardingScreen(),

@@ -21,7 +21,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final box = GetStorage();
 
-  // Define the UI structure for 12 main units with subunits
   final List<Map<String, dynamic>> units = [
     {
       'title': 'Introduction to the program and getting to know each other',
@@ -36,15 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
       'subunits': [
         {'name': 'Basic grammar skills', 'unitIndex': 2},
         {'name': 'Word order in English', 'unitIndex': 3},
-        {'name': 'Types of sentences in English', 'unitIndex': null},
+        {'name': 'Types of sentences in English', 'unitIndex': 4},
       ]
     },
     {
       'title': 'Tenses',
       'icon': Icons.history_edu,
       'subunits': [
-        {'name': 'Tenses', 'unitIndex': null},
-        {'name': 'Simple present', 'unitIndex': null},
+        {'name': 'Tenses', 'unitIndex': 5},
+        {'name': 'Simple present', 'unitIndex': 6},
         {'name': 'Present continuous', 'unitIndex': null},
         {'name': 'Present perfect', 'unitIndex': null},
         {'name': 'Present perfect continuous', 'unitIndex': null},
@@ -147,24 +146,29 @@ class _HomeScreenState extends State<HomeScreen> {
     },
   ];
 
-  // Map unitIndex to UnitModel data
   UnitModel? _getUnitData(int? unitIndex) {
     if (unitIndex == null) return null;
-    return unit_data.units.firstWhere(
+    final unit = unit_data.units.firstWhere(
           (unit) => unit.unitIndex == unitIndex,
       orElse: () => null as UnitModel,
     );
+    print('Mapping unitIndex: $unitIndex to unitName: ${unit?.unitName}');
+    return unit;
   }
 
   void _navigateToScreen(int unitIndex, int subunitIndex) {
     final subunit = units[unitIndex]['subunits'][subunitIndex];
     final unitData = _getUnitData(subunit['unitIndex'] as int?);
+    print('Navigating: Unit $unitIndex, Subunit $subunitIndex, Title: ${subunit['name']}, UnitIndex: ${subunit['unitIndex']}, UnitData: ${unitData?.unitName}');
 
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => IntroductionScreen(
           unitIndex: unitIndex,
+          subunitIndex: subunitIndex,
+          subunitTitle: subunit['name'],
+          unitData: unitData,
         ),
       ),
     );
@@ -197,30 +201,42 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: units.length,
                 itemBuilder: (context, index) {
                   return Card(
-                    elevation: 2,
-                    margin: const EdgeInsets.only(bottom: 8),
-                    child: ExpansionTile(
-                      leading: CircleAvatar(
-                        backgroundColor: const Color(0xFFFF6100),
-                        child: Icon(units[index]['icon'], color: Colors.white),
-                      ),
-                      title: Text(
-                        units[index]['title'],
-                        style: const TextStyle(
-                          color: Color(0xFF010066),
-                          fontWeight: FontWeight.w500,
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: Theme(
+                      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                      child: ExpansionTile(
+                        leading: CircleAvatar(
+                          backgroundColor: const Color(0xFFFF6100),
+                          child: Icon(units[index]['icon'], color: Colors.white),
                         ),
-                      ),
-                      children: units[index]['subunits'].map<Widget>((subunit) {
-                        final subunitIndex = units[index]['subunits'].indexOf(subunit);
-                        return ListTile(
-                          title: Text(
-                            subunit['name'],
-                            style: const TextStyle(fontSize: 14),
+                        title: Text(
+                          units[index]['title'],
+                          style: const TextStyle(
+                            color: Color(0xFF010066),
+                            fontWeight: FontWeight.w600,
                           ),
-                          onTap: () => _navigateToScreen(index, subunitIndex),
-                        );
-                      }).toList(),
+                        ),
+                        childrenPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        children: units[index]['subunits'].map<Widget>((subunit) {
+                          final subunitIndex = units[index]['subunits'].indexOf(subunit);
+                          return Column(
+                            children: [
+                              ListTile(
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                title: Text(
+                                  subunit['name'],
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                                trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
+                                onTap: () => _navigateToScreen(index, subunitIndex),
+                              ),
+                              const Divider(height: 1),
+                            ],
+                          );
+                        }).toList(),
+                      ),
                     ),
                   );
                 },

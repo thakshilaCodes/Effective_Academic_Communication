@@ -1,84 +1,133 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'models/all_units.dart';
-import 'practice_activity_screen_1.dart';
-
+import 'package:eng_app_2/models/unit_model.dart';
+import 'package:eng_app_2/practice_activity_screen_1.dart';
 
 class InstructionsScreen extends StatefulWidget {
   final int unitIndex;
-  InstructionsScreen({required this.unitIndex});
+  final int subunitIndex;
+  final String subunitTitle;
+  final UnitModel? unitData;
+
+  const InstructionsScreen({
+    Key? key,
+    required this.unitIndex,
+    required this.subunitIndex,
+    required this.subunitTitle,
+    this.unitData,
+  }) : super(key: key);
 
   @override
   _InstructionsScreenState createState() => _InstructionsScreenState();
 }
 
 class _InstructionsScreenState extends State<InstructionsScreen> {
-  FlutterTts flutterTts = FlutterTts();
-  late YoutubePlayerController _controller;
+  YoutubePlayerController? _controller;
 
   @override
   void initState() {
     super.initState();
-    _speakText();
-    _controller = YoutubePlayerController(
-      initialVideoId: units[widget.unitIndex].instructionVideoId,
-      flags: YoutubePlayerFlags(autoPlay: false),
-    );
+    if (widget.unitData != null && widget.unitData!.instructionVideoId != null) {
+      _controller = YoutubePlayerController(
+        initialVideoId: widget.unitData!.instructionVideoId!,
+        flags: const YoutubePlayerFlags(autoPlay: false),
+      );
+    }
   }
 
-  void _speakText() async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.speak(units[widget.unitIndex].instructionsText);
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final unit = units[widget.unitIndex];
+    final unit = widget.unitData;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Instructions", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-        backgroundColor: Color(0xFF010066),
+        title: Text(
+          widget.subunitTitle,
+          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        backgroundColor: const Color(0xFF010066),
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
+      body: unit == null || unit.instructionsText.isEmpty
+          ? const Center(
+        child: Text(
+          "No instructions available.",
+          style: TextStyle(fontSize: 18, color: Colors.grey),
+        ),
+      )
+          : SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Title
+            const Text(
+              "Instructions",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF010066),
+              ),
+            ),
+            const SizedBox(height: 10),
+
             // Instructions Text
             Text(
               unit.instructionsText,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black87),
+              style: const TextStyle(fontSize: 18, color: Colors.black87),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-            // YouTube Video Player
-            YoutubePlayer(controller: _controller),
+            // YouTube Video Player (if available)
+            if (_controller != null)
+              YoutubePlayer(
+                controller: _controller!,
+                showVideoProgressIndicator: true,
+                progressColors: const ProgressBarColors(
+                  playedColor: Colors.red,
+                  handleColor: Colors.redAccent,
+                ),
+              ),
 
-            Spacer(),
+            const SizedBox(height: 30),
 
-            // Next Button at the Bottom Center
-            Align(
-              alignment: Alignment.center,
+            // Next Button
+            SizedBox(
+              width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PracticeActivityScreen(unitIndex: widget.unitIndex),
+                      builder: (context) => PracticeActivityScreen(
+                        unitIndex: widget.unitIndex,
+                        subunitIndex: widget.subunitIndex,
+                        subunitTitle: widget.subunitTitle,
+                        unitData: widget.unitData,
+                      ),
                     ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF010066),
-                  padding: EdgeInsets.symmetric(vertical: 14, horizontal: 32),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  backgroundColor: const Color(0xFFFF6100),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
-                child: Text("Next: Practice Activity", style: TextStyle(fontSize: 18, color: Colors.white)),
+                child: const Text(
+                  "Next: Practice Activity",
+                  style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
-            SizedBox(height: 20), // Add space below button
           ],
         ),
       ),

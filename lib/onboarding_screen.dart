@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -8,6 +9,12 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _controller = PageController();
+  final box = GetStorage();
+
+  void completeOnboarding() {
+    box.write('first_time', false); // Mark onboarding as completed
+    Navigator.pushReplacementNamed(context, '/login'); // Redirect to login
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +27,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               buildPage(
                 image: 'assets/onboarding/ob1.jpg',
                 title: '🗣️ Speak Like a Pro!',
-                description: 'Tired of sounding like a robot? 🤖 Let’s fix that! Our app will help you master English pronunciation, one word at a time. Get ready to talk like a native and impress everyone! 🎤✨',
+                description:
+                'Tired of sounding like a robot? 🤖 Let’s fix that! Our app will help you master English pronunciation, one word at a time. Get ready to talk like a native and impress everyone! 🎤✨',
               ),
               buildPage(
                 image: 'assets/onboarding/ob5.png',
                 title: '👂 Listen, Laugh & Learn!',
-                description: 'Who said grammar and pronunciation have to be boring? 🤓🎉 We’ve packed this app with hilarious examples, fun challenges, and real-world practice. Get ready to laugh and learn! 😆📚',
+                description:
+                'Who said grammar and pronunciation have to be boring? 🤓🎉 We’ve packed this app with hilarious examples, fun challenges, and real-world practice. Get ready to laugh and learn! 😆📚',
               ),
             ],
           ),
@@ -53,12 +62,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             top: 40,
             right: 20,
             child: TextButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/home');
-              },
+              onPressed: completeOnboarding,
               child: Text(
                 'Skip',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue),
               ),
             ),
           ),
@@ -70,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: TextButton(
               onPressed: () {
                 if (_controller.page == 1) {
-                  Navigator.pushReplacementNamed(context, '/home'); // Last page, go to home
+                  completeOnboarding(); // On last page, complete onboarding
                 } else {
                   _controller.nextPage(
                     duration: Duration(milliseconds: 500),
@@ -89,11 +99,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget buildPage({required String image, required String title, required String description}) {
+  Widget buildPage(
+      {required String image,
+        required String title,
+        required String description}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(image, height: 300), // Ensure you have these images in assets
+        Image.asset(image, height: 300),
         SizedBox(height: 20),
         Text(
           title,

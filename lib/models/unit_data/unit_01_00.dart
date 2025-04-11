@@ -21,32 +21,39 @@ By the end of this lesson, you will be able to:
 
     """,
     preClassActivityDescription: """
-    The first step of our lesson is a pre-class activity. This is a very small task for you but after completing this activity, you will get a brief idea about the lesson that we are going to do today. You have to follow the steps given and complete it. 
+Follow the steps given and complete it. 
      """,
     preClassQuestions: [
-      PreClassQuestion(questionText: "Step 1 – Introduce yourself in 3-4 sentences, including your name, academic background, interests, and life goals. Keep it simple!", correctAnswer: "Self-introduction"),
-      PreClassQuestion(questionText: "Step 2 – Use ChatGPT to ask for feedback on your introduction. Then, let the AI tool generate a sample introduction.", correctAnswer: "Hello, my name is John."),
+      PreClassQuestion(questionText: "Introduce yourself in 3-4 sentences, including your name, academic background, interests, and life goals. Keep it simple!", correctAnswer: "Self-introduction"),
+      PreClassQuestion(questionText: "Use ChatGPT to ask for feedback on your introduction. Then, let the AI tool generate a sample introduction.", correctAnswer: "Hello, my name is John."),
+      PreClassQuestion(questionText: "Practice your self-introduction again and check for grammar errors and clarity using Grammarly.", correctAnswer: "Self-introduction"),
+      PreClassQuestion(questionText: "Write your self-introduction in the given space so we can get to know you!", correctAnswer: "Hello, my name is John."),
+
     ],
     practiceActivityDescription1: """
-    After watching the brief recorded session, we hope you receive a good understanding of how you introduce yourself in different ways. Now, it’s time to do an individual activity to practice what you learnt. You can simply follow the steps given. 
-•	Step 1: Record a 30-second video or audio introducing yourself.
-•	Step 2: Use Speechify or NaturalReader to listen to your introduction and check your pronunciation.
-•	Step 3: Upload your final recording to the given submission link. 
+It’s time to do an individual activity to practice what you learnt. You can simply follow the steps given. /n
 
-    """,
+Step 1: Record a 30-second video or audio introducing yourself.
 
-    practiceActivityDescription2: """
-    Dear all, next we’ll watch a YouTube video which is about “self-introductions”. These videos can be a good source of information for you to improve your proficiency. Also, this activity will summarize what we learnt today.
+Step 2: Use Speechify or NaturalReader to listen to your introduction and check your pronunciation.
+
+Step 3: Upload your final recording to the given submission link. 
     """,
     practiceUploadLink: "https://example.com/upload-practice-activity",
+
+    practiceActivityDescription2: """
+Next we’ll watch a YouTube video which is about “self-introductions”. These videos can be a good source of information for you to improve your proficiency.
+    """,
+
     practiceVideoUrl: "https://www.youtube.com/watch?v=8laYlyAFd0o",
     instructionsText: """
-By now, you should have a basic idea of what we will discuss in the first lesson. It is important to introduce ourselves properly in every situation since first impressions matter. Now, play the brief recorded session which will give you more information about self-introductions.
+Play the brief recorded session which will give you more information about self-introductions.
     """,
     instructionVideoId: "8laYlyAFd0o",
     summary: """
-    We completed our very first lesson today! The main focus of the lesson was to provide you with background information about the program and what we will be doing in the future. We also covered the lesson on “Self-Introductions,” which will be very helpful for getting to know each other at university. Additionally, you can use this knowledge when a lecturer asks you to introduce yourself.
-    We hope this lesson was interesting and gave you some motivation to improve your English proficiency!
+We completed our very first lesson today! The main focus of the lesson was to provide you with background information about the program and what we will be doing in the future. We also covered the lesson on “Self-Introductions,” which will be very helpful for getting to know each other at university. Additionally, you can use this knowledge when a lecturer asks you to introduce yourself.
+
+We hope this lesson was interesting and gave you some motivation to improve your English proficiency!
   """,
     inClassActivity: "Hello students! We believe you have completed the lesson and are ready to attend the physical class. We will have an interactive session with casual conversations and will use different AI tools to make it more engaging. See you soon!",
     quizQuestions: [

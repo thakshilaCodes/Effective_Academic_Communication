@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import '../models/unit_data.dart';
+import 'models/all_units.dart';
+import 'models/unit_model.dart';
 import 'summary_screen.dart';
 
 class QuizScreen extends StatefulWidget {
   final int unitIndex;
+
   QuizScreen({required this.unitIndex});
 
   @override
@@ -11,51 +13,57 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  late List<QuizQuestion> quizQuestions;
   List<String?> selectedAnswers = [];
   bool showResults = false;
-  int correctCount = 0;
+  String? errorMessage;
 
   @override
   void initState() {
     super.initState();
-    selectedAnswers = List.filled(units[widget.unitIndex].quizQuestions.length, null);
+    quizQuestions = units[widget.unitIndex].quizQuestions;
+    selectedAnswers = List.filled(quizQuestions.length, null);
   }
 
-  void checkAnswers() {
-    int count = 0;
-    final unit = units[widget.unitIndex];
-
-    for (int i = 0; i < unit.quizQuestions.length; i++) {
-      if (selectedAnswers[i] == unit.quizOptions[i][unit.correctAnswers[i]]) {
-        count++;
-      }
+  void uploadAnswers() {
+    if (selectedAnswers.contains(null) || selectedAnswers.contains("")) {
+      setState(() {
+        errorMessage = "Please answer all questions before submitting.";
+      });
+      return;
     }
 
     setState(() {
-      correctCount = count;
       showResults = true;
+      errorMessage = null;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final unit = units[widget.unitIndex];
     return Scaffold(
       appBar: AppBar(
         title: Text("Quiz", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
         backgroundColor: Color(0xFF010066),
         centerTitle: true,
       ),
-      body: Container(
-        color: Colors.white,
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if (errorMessage != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  errorMessage!,
+                  style: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
             Expanded(
               child: ListView.builder(
-                itemCount: unit.quizQuestions.length,
+                itemCount: quizQuestions.length,
                 itemBuilder: (context, index) {
+                  final question = quizQuestions[index];
                   return Card(
                     margin: EdgeInsets.symmetric(vertical: 8.0),
                     shape: RoundedRectangleBorder(
@@ -68,22 +76,18 @@ class _QuizScreenState extends State<QuizScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            unit.quizQuestions[index],
+                            question.question,
                             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
-                          ...unit.quizOptions[index].map((option) {
+                          if (question.options != null) ...question.options!.map((option) {
                             bool isCorrect = showResults &&
-                                option == unit.quizOptions[index][unit.correctAnswers[index]];
+                                option == question.options![question.correctOptionIndex!];
                             bool isSelected = selectedAnswers[index] == option;
                             return RadioListTile<String>(
                               title: Text(
                                 option,
                                 style: TextStyle(
-                                  color: isCorrect
-                                      ? Colors.green
-                                      : isSelected && showResults
-                                      ? Colors.red
-                                      : Colors.black,
+                                  color: isCorrect ? Colors.green : isSelected && showResults ? Colors.red : Colors.black,
                                   fontWeight: isCorrect ? FontWeight.bold : FontWeight.normal,
                                 ),
                               ),
@@ -98,11 +102,21 @@ class _QuizScreenState extends State<QuizScreen> {
                               },
                             );
                           }).toList(),
-                          if (showResults)
+                          if (question.isTextAnswer)
+                            TextField(
+                              onChanged: (value) {
+                                selectedAnswers[index] = value;
+                              },
+                              decoration: InputDecoration(
+                                labelText: "Your Answer",
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          if (showResults && question.isTextAnswer)
                             Padding(
-                              padding: const EdgeInsets.only(left: 16.0, top: 5),
+                              padding: const EdgeInsets.only(top: 5),
                               child: Text(
-                                "Correct Answer: ${unit.quizOptions[index][unit.correctAnswers[index]]}",
+                                "Correct Answer: ${question.correctTextAnswer}",
                                 style: TextStyle(fontSize: 16, color: Colors.green, fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -113,62 +127,39 @@ class _QuizScreenState extends State<QuizScreen> {
                 },
               ),
             ),
-            if (showResults)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "You got $correctCount / ${unit.quizQuestions.length} correct!",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),
-                    ),
-                  ],
-                ),
-              ),
-            if (!showResults)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: ElevatedButton(
+            // Buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFFF6100),
-                    padding: EdgeInsets.symmetric(vertical: 14, horizontal: 30),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    elevation: 5,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
-                  onPressed: checkAnswers,
-                  child: Text(
-                    "Submit Answers",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
+                  onPressed: showResults ? null : uploadAnswers,
+                  child: Text("Upload Answers", style: TextStyle(fontSize: 16, color: Colors.white)),
                 ),
-              ),
-            if (showResults)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: ElevatedButton(
+                ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF010066),
-                    padding: EdgeInsets.symmetric(vertical: 14, horizontal: 30),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    elevation: 5,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
-                  onPressed: () {
+                  onPressed: showResults
+                      ? () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SummaryScreen(unitIndex: widget.unitIndex)),
+                      MaterialPageRoute(
+                        builder: (context) => SummaryScreen(unitIndex: widget.unitIndex),
+                      ),
                     );
-                  },
-                  child: Text(
-                    "Next",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
+                  }
+                      : null,
+                  child: Text("Next: Instructions", style: TextStyle(fontSize: 16, color: Colors.white)),
                 ),
-              ),
+              ],
+            ),
           ],
         ),
       ),

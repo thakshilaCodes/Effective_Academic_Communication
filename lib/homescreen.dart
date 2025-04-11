@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:eng_app_2/models/all_units.dart' as unit_data; // Alias to avoid name clash
+import 'package:eng_app_2/models/unit_model.dart';
 import 'introduction_screen.dart';
 import 'pre_class_activity_screen.dart';
 import 'instructions_screen.dart';
@@ -19,80 +21,153 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final box = GetStorage();
 
-  final List<String> unitTitles = [
-    "Introduction & Getting Started",
-    "Basic Grammar Skills",
-    "Tenses Mastery",
-    "Study Skills Essentials",
-    "Academic Discussions & Viva",
-    "Communication Strategies",
-    "Vocabulary Development",
-    "Structuring Ideas for Discussions",
-    "Effective Academic Presentations",
-    "Logical Flow & Coherence",
-    "Mastering Oral Exams & Viva",
-    "Reflection & Self-Improvement"
+  // Define the UI structure for 12 main units with subunits
+  final List<Map<String, dynamic>> units = [
+    {
+      'title': 'Introduction to the program and getting to know each other',
+      'icon': Icons.school,
+      'subunits': [
+        {'name': 'Introduction to the program and getting to know each other', 'unitIndex': 1},
+      ]
+    },
+    {
+      'title': 'Basic grammar skills',
+      'icon': Icons.book,
+      'subunits': [
+        {'name': 'Basic grammar skills', 'unitIndex': 2},
+        {'name': 'Word order in English', 'unitIndex': 3},
+        {'name': 'Types of sentences in English', 'unitIndex': null},
+      ]
+    },
+    {
+      'title': 'Tenses',
+      'icon': Icons.history_edu,
+      'subunits': [
+        {'name': 'Tenses', 'unitIndex': null},
+        {'name': 'Simple present', 'unitIndex': null},
+        {'name': 'Present continuous', 'unitIndex': null},
+        {'name': 'Present perfect', 'unitIndex': null},
+        {'name': 'Present perfect continuous', 'unitIndex': null},
+        {'name': 'Simple past', 'unitIndex': null},
+        {'name': 'Past continuous', 'unitIndex': null},
+        {'name': 'Past perfect continuous', 'unitIndex': null},
+        {'name': 'Simple future', 'unitIndex': null},
+        {'name': 'Future Continuous', 'unitIndex': null},
+        {'name': 'Future perfect', 'unitIndex': null},
+      ]
+    },
+    {
+      'title': 'Essential study skills',
+      'icon': Icons.lightbulb,
+      'subunits': [
+        {'name': 'Essential study skills', 'unitIndex': null},
+        {'name': 'Listening to lectures and taking notes', 'unitIndex': null},
+        {'name': 'Vocabulary learning strategies', 'unitIndex': null},
+      ]
+    },
+    {
+      'title': 'Academic discussion and viva preparation',
+      'icon': Icons.record_voice_over,
+      'subunits': [
+        {'name': 'Academic discussion and viva preparation', 'unitIndex': null},
+        {'name': 'Introduction to viva voce', 'unitIndex': null},
+        {'name': 'Structuring responses', 'unitIndex': null},
+        {'name': 'Handling examiner questions', 'unitIndex': null},
+      ]
+    },
+    {
+      'title': 'Communication strategies',
+      'icon': Icons.forum,
+      'subunits': [
+        {'name': 'Communication strategies', 'unitIndex': null},
+        {'name': 'Understanding communication strategies', 'unitIndex': null},
+        {'name': 'Types of questions', 'unitIndex': null},
+        {'name': 'Summarizing key points in discussions', 'unitIndex': null},
+        {'name': 'Paraphrasing for Better Understanding', 'unitIndex': null},
+      ]
+    },
+    {
+      'title': 'Context-Based Vocabulary Development',
+      'icon': Icons.spellcheck,
+      'subunits': [
+        {'name': 'Context-Based Vocabulary Development', 'unitIndex': null},
+        {'name': 'Changing word forms', 'unitIndex': null},
+        {'name': 'Using context clues to understand unfamiliar words', 'unitIndex': null},
+        {'name': 'Using formal vs. informal expressions', 'unitIndex': null},
+        {'name': 'Replacing common words with academic equivalents', 'unitIndex': null},
+      ]
+    },
+    {
+      'title': 'Structuring ideas for academic discussions',
+      'icon': Icons.account_tree,
+      'subunits': [
+        {'name': 'Structuring ideas for academic discussions', 'unitIndex': null},
+        {'name': 'Organizing thoughts before speaking/writing', 'unitIndex': null},
+        {'name': 'The point-evidence-explanation (PEE) method', 'unitIndex': null},
+        {'name': 'Using topic sentences and supporting details', 'unitIndex': null},
+      ]
+    },
+    {
+      'title': 'Making academic presentations',
+      'icon': Icons.present_to_all,
+      'subunits': [
+        {'name': 'Making academic presentations', 'unitIndex': null},
+        {'name': 'Introduction to academic presentations', 'unitIndex': null},
+        {'name': 'Tips to overcome presentation anxiety', 'unitIndex': null},
+        {'name': 'Structuring presentations', 'unitIndex': null},
+      ]
+    },
+    {
+      'title': 'Enhancing coherence and logical flow',
+      'icon': Icons.timeline,
+      'subunits': [
+        {'name': 'Enhancing coherence and logical flow', 'unitIndex': null},
+        {'name': 'Maintaining the rapport of the presentations', 'unitIndex': null},
+        {'name': 'Practicing and refining delivery (online and in-person)', 'unitIndex': null},
+      ]
+    },
+    {
+      'title': 'Mastering Oral Exams & Viva Voce',
+      'icon': Icons.mic,
+      'subunits': [
+        {'name': 'Mastering Oral Exams & Viva Voce', 'unitIndex': null},
+        {'name': 'Speaking with Confidence & Clarity', 'unitIndex': null},
+        {'name': 'Handling Challenging & Unexpected Questions', 'unitIndex': null},
+        {'name': 'Responding with Critical Thinking', 'unitIndex': null},
+      ]
+    },
+    {
+      'title': 'Reflection and self-improvement in academic communication',
+      'icon': Icons.assessment,
+      'subunits': [
+        {'name': 'Reflection and self-improvement in academic communication', 'unitIndex': null},
+        {'name': 'Self-Assessment & Reflection', 'unitIndex': null},
+        {'name': 'Peer Feedback & Group Discussion', 'unitIndex': null},
+      ]
+    },
   ];
 
-  final List<IconData> unitIcons = [
-    Icons.school,
-    Icons.book,
-    Icons.history_edu,
-    Icons.lightbulb,
-    Icons.record_voice_over,
-    Icons.forum,
-    Icons.spellcheck,
-    Icons.account_tree,
-    Icons.present_to_all,
-    Icons.timeline,
-    Icons.mic,
-    Icons.assessment,
-  ];
-
-  List<bool> unitUnlocked = List.generate(12, (index) => index == 0);
-
-  void _unlockNextUnit(int index) {
-    if (index < 11) {
-      setState(() {
-        unitUnlocked[index + 1] = true;
-      });
-    }
+  // Map unitIndex to UnitModel data
+  UnitModel? _getUnitData(int? unitIndex) {
+    if (unitIndex == null) return null;
+    return unit_data.units.firstWhere(
+          (unit) => unit.unitIndex == unitIndex,
+      orElse: () => null as UnitModel,
+    );
   }
 
-  void _navigateToUnit(int index) {
-    if (unitUnlocked[index]) {
-      Widget screen;
-      switch (index) {
-        case 0:
-          screen = IntroductionScreen(unitIndex: index);
-          break;
-        case 1:
-          screen = PreClassActivityScreen(unitIndex: index);
-          break;
-        case 2:
-          screen = InstructionsScreen(unitIndex: index);
-          break;
-        case 3:
-          screen = PracticeActivityScreen(unitIndex: index);
-          break;
-        case 4:
-          screen = QuizScreen(unitIndex: index);
-          break;
-        case 5:
-          screen = InClassActivityScreen(unitIndex: index);
-          break;
-        case 6:
-          screen = SummaryScreen(unitIndex: index);
-          break;
-        default:
-          screen = IntroductionScreen(unitIndex: index);
-      }
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => screen),
-      );
-      _unlockNextUnit(index);
-    }
+  void _navigateToScreen(int unitIndex, int subunitIndex) {
+    final subunit = units[unitIndex]['subunits'][subunitIndex];
+    final unitData = _getUnitData(subunit['unitIndex'] as int?);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => IntroductionScreen(
+          unitIndex: unitIndex,
+        ),
+      ),
+    );
   }
 
   @override
@@ -102,68 +177,50 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(
           "Welcome, ${widget.username}!",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        backgroundColor: Color(0xFF010066),
+        backgroundColor: const Color(0xFF010066),
         elevation: 0,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Your Learning Journey 📚",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF010066)),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 1.2,
-                ),
-                itemCount: unitTitles.length,
+              child: ListView.builder(
+                itemCount: units.length,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => _navigateToUnit(index),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: unitUnlocked[index] ? Color(0xFF010066) : Colors.grey.shade400,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(color: Colors.black12, blurRadius: 5, offset: Offset(2, 2)),
-                        ],
+                  return Card(
+                    elevation: 2,
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: ExpansionTile(
+                      leading: CircleAvatar(
+                        backgroundColor: const Color(0xFFFF6100),
+                        child: Icon(units[index]['icon'], color: Colors.white),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            radius: 30,
-                            backgroundColor: unitUnlocked[index] ? Color(0xFFFF6100) : Colors.grey,
-                            child: Icon(
-                              unitIcons[index],
-                              size: 35,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              unitTitles[index],
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ],
+                      title: Text(
+                        units[index]['title'],
+                        style: const TextStyle(
+                          color: Color(0xFF010066),
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
+                      children: units[index]['subunits'].map<Widget>((subunit) {
+                        final subunitIndex = units[index]['subunits'].indexOf(subunit);
+                        return ListTile(
+                          title: Text(
+                            subunit['name'],
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                          onTap: () => _navigateToScreen(index, subunitIndex),
+                        );
+                      }).toList(),
                     ),
                   );
                 },

@@ -1,105 +1,114 @@
-import 'package:eng_app_2/quiz_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart' show LaunchMode;
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import '../models/unit_data.dart';
+
+import 'models/all_units.dart';
+import 'models/unit_model.dart';
+import 'quiz_screen.dart';
 
 class PracticeActivityScreen2 extends StatefulWidget {
   final int unitIndex;
-  PracticeActivityScreen2({required this.unitIndex});
+  const PracticeActivityScreen2({required this.unitIndex});
 
   @override
-  _PracticeActivityScreen2State createState() => _PracticeActivityScreen2State();
+  State<PracticeActivityScreen2> createState() => _PracticeActivityScreen2State();
 }
 
 class _PracticeActivityScreen2State extends State<PracticeActivityScreen2> {
-  FlutterTts flutterTts = FlutterTts();
-  late YoutubePlayerController _controller;
-  bool isVideoPlaying = false;
+  late UnitModel unit;
+  YoutubePlayerController? _youtubeController;
 
   @override
   void initState() {
     super.initState();
-    _speakText();
-    _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(units[widget.unitIndex].practiceVideoUrl)!,
-      flags: YoutubePlayerFlags(autoPlay: false, mute: false),
-    );
+    unit = units[widget.unitIndex];
+
+    if (unit.practiceVideoUrl!= null) {
+      final videoId = YoutubePlayer.convertUrlToId(unit.practiceVideoUrl!);
+      if (videoId != null) {
+        _youtubeController = YoutubePlayerController(
+          initialVideoId: videoId,
+          flags: const YoutubePlayerFlags(autoPlay: false, mute: false),
+        );
+      }
+    }
   }
 
-  void _speakText() async {
-    await flutterTts.speak(units[widget.unitIndex].practiceActivityDescription2);
+  void _launchURL(String url) async {
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  @override
+  void dispose() {
+    _youtubeController?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final unit = units[widget.unitIndex];
+    final hasVideo = unit.practiceVideoUrl != null;
+    final hasLink = unit.practiceActivityLink2 != null;
+    final hasUploadLink = unit.practiceUploadLink2 != null;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Practice Activity 2", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-        backgroundColor: Color(0xFF010066),
+        title: const Text("Practice Activity 2", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        backgroundColor: const Color(0xFF010066),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Activity Description
+            // Show description
             Text(
               unit.practiceActivityDescription2,
-              style: TextStyle(fontSize: 18, color: Colors.black),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 10),
 
-            // YouTube Video (Displayed but plays only on click)
-            Center(
-              child: isVideoPlaying
-                  ? YoutubePlayer(controller: _controller)
-                  : GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isVideoPlaying = true;
-                    _controller.play();
-                  });
-                },
-                child: Container(
-                  width: double.infinity,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: NetworkImage("https://img.youtube.com/vi/${_controller.initialVideoId}/0.jpg"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  child: Center(
-                    child: Icon(Icons.play_circle_fill, color: Colors.white, size: 60),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
+            // Show video if available
+            if (hasVideo && _youtubeController != null)
+              YoutubePlayer(controller: _youtubeController!),
 
-            // Next Button (Blue)
-            Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF010066),
-                  padding: EdgeInsets.symmetric(vertical: 14, horizontal: 32),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => QuizScreen(unitIndex: widget.unitIndex),
-                    ),
-                  );
-                },
-                child: Text("Next: Quiz", style: TextStyle(fontSize: 16, color: Colors.white)),
+            const SizedBox(height: 20),
+
+            // Show task link button
+            if (hasLink)
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                onPressed: () => _launchURL(unit.practiceActivityLink2!),
+                child: const Text("Go to Task Site", style: TextStyle(color: Colors.white)),
               ),
+
+            // Show upload button
+            if (hasUploadLink)
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                onPressed: () => _launchURL(unit.practiceUploadLink2!),
+                child: const Text("Upload Your Answer", style: TextStyle(color: Colors.white)),
+              ),
+
+            const Spacer(),
+
+            // Go to Quiz button
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF010066)),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => QuizScreen(unitIndex: widget.unitIndex)),
+                );
+              },
+              child: const Text("Go to Quiz", style: TextStyle(color: Colors.white)),
             ),
           ],
         ),

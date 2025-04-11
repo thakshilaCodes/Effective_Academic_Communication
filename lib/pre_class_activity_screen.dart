@@ -1,119 +1,215 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import '../models/unit_data.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart' show LaunchMode, launchUrl;
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
 import 'instructions_screen.dart';
+import 'models/all_units.dart';
+import 'models/unit_model.dart';
 
 class PreClassActivityScreen extends StatefulWidget {
   final int unitIndex;
-  PreClassActivityScreen({required this.unitIndex});
+
+  const PreClassActivityScreen({super.key, required this.unitIndex});
 
   @override
-  _PreClassActivityScreenState createState() => _PreClassActivityScreenState();
+  State<PreClassActivityScreen> createState() => _PreClassActivityScreenState();
 }
 
 class _PreClassActivityScreenState extends State<PreClassActivityScreen> {
-  FlutterTts flutterTts = FlutterTts();
+  late UnitModel unit;
+  List<TextEditingController> controllers = [];
+  bool isSubmitted = false;
+  bool allAnswered = false;
+  YoutubePlayerController? _youtubeController;
 
   @override
   void initState() {
     super.initState();
-    _speakDescription();
+    unit = units[widget.unitIndex];
+    controllers = List.generate(unit.preClassQuestions?.length ?? 0, (_) => TextEditingController());
+
+    if (unit.preClassActivityVideo != null && unit.preClassActivityVideo!.isNotEmpty) {
+      final videoId = YoutubePlayer.convertUrlToId(unit.preClassActivityVideo!);
+      if (videoId != null) {
+        _youtubeController = YoutubePlayerController(
+          initialVideoId: videoId,
+          flags: const YoutubePlayerFlags(
+            autoPlay: false,
+            mute: false,
+          ),
+        );
+      }
+    }
   }
 
-  void _speakDescription() async {
-    await flutterTts.setLanguage("en-US");
-    await flutterTts.speak(units[widget.unitIndex].preClassActivityDescription);
+  @override
+  void dispose() {
+    _youtubeController?.dispose();
+    super.dispose();
+  }
+
+  void validateAnswers() {
+    setState(() {
+      if (unit.preClassQuestions != null && unit.preClassQuestions!.isNotEmpty) {
+        allAnswered = controllers.every((controller) => controller.text.trim().isNotEmpty);
+        if (!allAnswered) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Please answer all questions!"), backgroundColor: Colors.red),
+          );
+          return;
+        }
+      }
+      isSubmitted = true;
+    });
+  }
+
+  void _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+
+    try {
+      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Could not launch URL: $url"), backgroundColor: Colors.red),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final unit = units[widget.unitIndex];
+    final hasVideo = unit.preClassActivityVideo != null && unit.preClassActivityVideo!.isNotEmpty;
+    final hasExternalTaskLink = unit.preClassActivityLink != null && unit.preClassActivityLink!.isNotEmpty;
+    final hasUploadLink = unit.preClassActivityUploadLink != null && unit.preClassActivityUploadLink!.isNotEmpty;
+    final hasQuestions = unit.preClassQuestions != null && unit.preClassQuestions!.isNotEmpty;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pre-Class Activity", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,)),
-        backgroundColor: Color(0xFF010066),
+        backgroundColor: const Color(0xFF010066),
+        title: const Text("Pre-Class Activity", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Description with TTS
-            Text(
-              "Instructions:",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF010066),
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              unit.preClassActivityDescription,
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 20),
-            Divider(color: Colors.grey.shade400),
+      body: SingleChildScrollView(  // Wrap the entire body in SingleChildScrollView
+        padding: const EdgeInsets.all(16.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(unit.preClassActivityDescription, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 12),
 
-            // Task Display
-            Text(
-              "Your Task:",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF010066),
-              ),
+          if (hasExternalTaskLink)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+              onPressed: () => _launchURL(unit.preClassActivityLink!),
+              child: const Text("Go to Activity Site"),
             ),
-            SizedBox(height: 10),
-            Container(
-              padding: EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Text(
-                unit.preClassActivity,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-              ),
-            ),
-            SizedBox(height: 30),
 
-            // Buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFF6100),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  ),
-                  onPressed: () {
-                    // Upload action here
-                  },
-                  child: Text("Upload Answers", style: TextStyle(fontSize: 16, color: Colors.white)),
+          if (hasVideo && _youtubeController != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: YoutubePlayer(
+                controller: _youtubeController!,
+                showVideoProgressIndicator: true,
+                progressColors: const ProgressBarColors(
+                  playedColor: Colors.red,
+                  handleColor: Colors.redAccent,
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF010066),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => InstructionsScreen(unitIndex: widget.unitIndex),
+              ),
+            ),
+
+          const SizedBox(height: 20),
+
+          if (hasQuestions)
+            ListView.builder(
+              shrinkWrap: true,  // Prevents overflow by allowing ListView to occupy limited space
+              itemCount: unit.preClassQuestions!.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(unit.preClassQuestions![index].questionText,
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                    const SizedBox(height: 5),
+                    TextField(
+                      controller: controllers[index],
+                      decoration: InputDecoration(
+                        hintText: "Type your answer...",
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                        filled: true,
+                        fillColor: Colors.grey[200],
                       ),
-                    );
-                  },
-                  child: Text("Next: Instructions", style: TextStyle(fontSize: 16, color: Colors.white)),
-                ),
-              ],
+                    ),
+                    const SizedBox(height: 15),
+                  ],
+                );
+              },
             ),
-          ],
-        ),
+
+          if (!hasQuestions && !hasVideo && hasUploadLink)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+              onPressed: () => _launchURL(unit.preClassActivityUploadLink!),
+              child: const Text("Submit Your Work"),
+            ),
+
+          const SizedBox(height: 10),
+
+          if (hasQuestions)
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFFF6100),
+                minimumSize: const Size(double.infinity, 50),
+              ),
+              onPressed: validateAnswers,
+              child: const Text("Submit Answers", style: TextStyle(color: Colors.white)),
+            ),
+
+          const SizedBox(height: 10),
+
+          if (isSubmitted && hasQuestions)
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.blue[50],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Correct Answers:",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue)),
+                  for (int i = 0; i < unit.preClassQuestions!.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Text(
+                        "${unit.preClassQuestions![i].questionText}\n✅ ${unit.preClassQuestions![i].correctAnswer}",
+                        style: const TextStyle(fontSize: 16, color: Colors.green),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+
+          const SizedBox(height: 10),
+
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: (isSubmitted || !hasQuestions) ? const Color(0xFF010066) : Colors.grey,
+              minimumSize: const Size(double.infinity, 50),
+            ),
+            onPressed: (isSubmitted || !hasQuestions)
+                ? () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InstructionsScreen(unitIndex: widget.unitIndex),
+                ),
+              );
+            }
+                : null,
+            child: const Text("Next", style: TextStyle(color: Colors.white)),
+          ),
+        ]),
       ),
     );
   }

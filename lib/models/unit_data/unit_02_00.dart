@@ -1,6 +1,7 @@
 import '../unit_model.dart';
 
-final UnitModel unit2 = UnitModel(
+final UnitModel unit2_0 = UnitModel(
+  unitIndex: 2,
     unitName: "Basic Grammar Skills",
     introductionText: """
 Hello everyone, Welcome to Unit 02 

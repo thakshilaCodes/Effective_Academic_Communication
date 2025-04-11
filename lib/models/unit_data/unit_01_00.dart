@@ -1,6 +1,7 @@
 import '../unit_model.dart';
 
-final UnitModel unit1 = UnitModel(
+final UnitModel unit1_0= UnitModel(
+  unitIndex: 1,
     unitName: "Introduction to the Programme and Getting to Know Each Other",
     introductionText: """
 Hello everyone! Welcome to the first session of your English course. This course is designed as a support system to help students improve their English proficiency, a necessary skill for your future academic journey at SLIIT. The course primarily focuses on speaking skills and will provide you with many enjoyable activities to practice English.

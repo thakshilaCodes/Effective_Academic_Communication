@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:eng_app_2/models/all_units.dart' as unit_data; // Alias to avoid name clash
+import 'package:eng_app_2/models/all_units.dart' as unit_data;
 import 'package:eng_app_2/models/unit_model.dart';
 import 'introduction_screen.dart';
-import 'pre_class_activity_screen.dart';
-import 'instructions_screen.dart';
-import 'practice_activity_screen_1.dart';
-import 'quiz_screen.dart';
-import 'in_class_activity_screen.dart';
-import 'summary_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String username;
-  const HomeScreen({Key? key, required this.username}) : super(key: key);
+  const HomeScreen({super.key, required this.username});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -26,7 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
       'title': 'Introduction to the program and getting to know each other',
       'icon': Icons.school,
       'subunits': [
-        {'name': 'Introduction to the program and getting to know each other', 'unitIndex': 1},
+        {
+          'name': 'Introduction to the program and getting to know each other',
+          'unitIndex': 1
+        },
       ]
     },
     {
@@ -91,19 +88,37 @@ class _HomeScreenState extends State<HomeScreen> {
       'subunits': [
         {'name': 'Context-Based Vocabulary Development', 'unitIndex': null},
         {'name': 'Changing word forms', 'unitIndex': null},
-        {'name': 'Using context clues to understand unfamiliar words', 'unitIndex': null},
+        {
+          'name': 'Using context clues to understand unfamiliar words',
+          'unitIndex': null
+        },
         {'name': 'Using formal vs. informal expressions', 'unitIndex': null},
-        {'name': 'Replacing common words with academic equivalents', 'unitIndex': null},
+        {
+          'name': 'Replacing common words with academic equivalents',
+          'unitIndex': null
+        },
       ]
     },
     {
       'title': 'Structuring ideas for academic discussions',
       'icon': Icons.account_tree,
       'subunits': [
-        {'name': 'Structuring ideas for academic discussions', 'unitIndex': null},
-        {'name': 'Organizing thoughts before speaking/writing', 'unitIndex': null},
-        {'name': 'The point-evidence-explanation (PEE) method', 'unitIndex': null},
-        {'name': 'Using topic sentences and supporting details', 'unitIndex': null},
+        {
+          'name': 'Structuring ideas for academic discussions',
+          'unitIndex': null
+        },
+        {
+          'name': 'Organizing thoughts before speaking/writing',
+          'unitIndex': null
+        },
+        {
+          'name': 'The point-evidence-explanation (PEE) method',
+          'unitIndex': null
+        },
+        {
+          'name': 'Using topic sentences and supporting details',
+          'unitIndex': null
+        },
       ]
     },
     {
@@ -121,8 +136,14 @@ class _HomeScreenState extends State<HomeScreen> {
       'icon': Icons.timeline,
       'subunits': [
         {'name': 'Enhancing coherence and logical flow', 'unitIndex': null},
-        {'name': 'Maintaining the rapport of the presentations', 'unitIndex': null},
-        {'name': 'Practicing and refining delivery (online and in-person)', 'unitIndex': null},
+        {
+          'name': 'Maintaining the rapport of the presentations',
+          'unitIndex': null
+        },
+        {
+          'name': 'Practicing and refining delivery (online and in-person)',
+          'unitIndex': null
+        },
       ]
     },
     {
@@ -131,7 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
       'subunits': [
         {'name': 'Mastering Oral Exams & Viva Voce', 'unitIndex': null},
         {'name': 'Speaking with Confidence & Clarity', 'unitIndex': null},
-        {'name': 'Handling Challenging & Unexpected Questions', 'unitIndex': null},
+        {
+          'name': 'Handling Challenging & Unexpected Questions',
+          'unitIndex': null
+        },
         {'name': 'Responding with Critical Thinking', 'unitIndex': null},
       ]
     },
@@ -139,7 +163,10 @@ class _HomeScreenState extends State<HomeScreen> {
       'title': 'Reflection and self-improvement in academic communication',
       'icon': Icons.assessment,
       'subunits': [
-        {'name': 'Reflection and self-improvement in academic communication', 'unitIndex': null},
+        {
+          'name': 'Reflection and self-improvement in academic communication',
+          'unitIndex': null
+        },
         {'name': 'Self-Assessment & Reflection', 'unitIndex': null},
         {'name': 'Peer Feedback & Group Discussion', 'unitIndex': null},
       ]
@@ -152,14 +179,12 @@ class _HomeScreenState extends State<HomeScreen> {
           (unit) => unit.unitIndex == unitIndex,
       orElse: () => null as UnitModel,
     );
-    print('Mapping unitIndex: $unitIndex to unitName: ${unit?.unitName}');
     return unit;
   }
 
   void _navigateToScreen(int unitIndex, int subunitIndex) {
     final subunit = units[unitIndex]['subunits'][subunitIndex];
     final unitData = _getUnitData(subunit['unitIndex'] as int?);
-    print('Navigating: Unit $unitIndex, Subunit $subunitIndex, Title: ${subunit['name']}, UnitIndex: ${subunit['unitIndex']}, UnitData: ${unitData?.unitName}');
 
     Navigator.push(
       context,
@@ -174,76 +199,150 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _showSubunitModal(int unitIndex) {
+    final subunits = units[unitIndex]['subunits'];
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Select a Lesson',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black87),
+                ),
+                ...subunits.map<Widget>((subunit) {
+                  int subIndex = subunits.indexOf(subunit);
+                  return ListTile(
+                    leading: const Icon(Icons.play_circle_outline, color: Color(0xFF010066)),
+                    title: Text(
+                      subunit['name'],
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _navigateToScreen(unitIndex, subIndex);
+                    },
+                  );
+                }).toList(),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF7F9FC),
       appBar: AppBar(
-        title: Text(
-          "Welcome, ${widget.username}!",
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
         backgroundColor: const Color(0xFF010066),
+        title: Text(
+          'Welcome, ${widget.username} 👋',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.white),
+        ),
         elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Your Learning Journey 📚",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF010066)),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+            decoration: const BoxDecoration(
+              color: Color(0xFF010066),
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(32), bottomRight: Radius.circular(32)),
             ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Your Learning Journey 📚",
+                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  "Explore units below and start learning.",
+                  style: TextStyle(color: Colors.white70),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: GridView.builder(
                 itemCount: units.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 0.85,
+                ),
                 itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: Theme(
-                      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                      child: ExpansionTile(
-                        leading: CircleAvatar(
-                          backgroundColor: const Color(0xFFFF6100),
-                          child: Icon(units[index]['icon'], color: Colors.white),
-                        ),
-                        title: Text(
-                          units[index]['title'],
-                          style: const TextStyle(
-                            color: Color(0xFF010066),
-                            fontWeight: FontWeight.w600,
+                  final unit = units[index];
+                  return GestureDetector(
+                    onTap: () => _showSubunitModal(index),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6,
+                            offset: Offset(0, 4),
                           ),
-                        ),
-                        childrenPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        children: units[index]['subunits'].map<Widget>((subunit) {
-                          final subunitIndex = units[index]['subunits'].indexOf(subunit);
-                          return Column(
-                            children: [
-                              ListTile(
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                title: Text(
-                                  subunit['name'],
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                                trailing: const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
-                                onTap: () => _navigateToScreen(index, subunitIndex),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+
+                            backgroundColor: const Color(0xFFFF6100),
+                            radius: 35,
+                            child: Icon(unit['icon'], color: Colors.white),
+                          ),
+                          const SizedBox(height: 12),
+                          Expanded(
+                            child: Text(
+                              unit['title'],
+                              textAlign: TextAlign.center,
+                              maxLines: 4,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                color: Color(0xFF010066),
                               ),
-                              const Divider(height: 1),
-                            ],
-                          );
-                        }).toList(),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Icon(Icons.touch_app_rounded, color: Colors.grey, size: 18),
+                        ],
                       ),
                     ),
                   );
                 },
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

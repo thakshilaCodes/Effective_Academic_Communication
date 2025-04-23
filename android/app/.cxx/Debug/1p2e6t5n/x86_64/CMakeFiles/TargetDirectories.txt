@@ -1,0 +1,2 @@
+C:/Users/thaks/Desktop/Flutter_Apps/Effective_Academic_Communication/android/app/.cxx/Debug/1p2e6t5n/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/thaks/Desktop/Flutter_Apps/Effective_Academic_Communication/android/app/.cxx/Debug/1p2e6t5n/x86_64/CMakeFiles/rebuild_cache.dir

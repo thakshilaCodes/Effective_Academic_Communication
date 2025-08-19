@@ -38,15 +38,17 @@ You can download the app here:
 ## 🖼️ Screenshots
 
 Here are some previews of the app in action:
-<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
-  <img src="screenshots/splash.jpg" alt="splash" style="width: 300px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-  <img src="screenshots/onboarding1.jpg" alt="onboarding1" style="width: 300px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-  <img src="screenshots/onboarding2.jpg" alt="onboarding2" style="width: 300px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-  <img src="screenshots/welcome.jpg" alt="welcome" style="width: 300px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-  <img src="screenshots/home.jpg" alt="home" style="width: 300px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+<p align="center">
+  <img src="screenshots/splash.jpg" width="230" alt="Splash"/>
+  <img src="screenshots/onboarding1.jpg" width="230" alt="Onboarding 1"/>
+  <img src="screenshots/onboarding2.jpg" width="230" alt="Onboarding 2"/>
+  <img src="screenshots/welcome.jpg" width="230" alt="Welcome"/>
+</p>
 
+<p align="center">
+  <img src="screenshots/home.jpg" width="230" alt="Home"/>
 
-</div>
+</p>
 
 
 

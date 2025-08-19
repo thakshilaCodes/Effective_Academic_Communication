@@ -66,136 +66,138 @@ class _PracticeActivityScreen2State extends State<PracticeActivityScreen2> {
     final hasLink = unit?.practiceActivityLink2?.isNotEmpty ?? false;
     final hasUploadLink = unit?.practiceUploadLink2?.isNotEmpty ?? false;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.subunitTitle,
-          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.subunitTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          backgroundColor: const Color(0xFF010066),
+          elevation: 0,
+          iconTheme: const IconThemeData(color: Colors.white),
         ),
-        backgroundColor: const Color(0xFF010066),
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      body: unit == null || (unit.practiceActivityDescription2.isEmpty && !hasVideo)
-          ? const Center(
-        child: Text("No practice activity 2 available.",
-            style: TextStyle(fontSize: 18, color: Colors.grey)),
-      )
-          : SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Description Card
-            if (unit.practiceActivityDescription2.isNotEmpty)
-              Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Icon(Icons.info_outline, color: Colors.blue),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          unit.practiceActivityDescription2,
-                          style: const TextStyle(fontSize: 16),
+        body: unit == null || (unit.practiceActivityDescription2.isEmpty && !hasVideo)
+            ? const Center(
+          child: Text("No practice activity 2 available.",
+              style: TextStyle(fontSize: 18, color: Colors.grey)),
+        )
+            : SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Description Card
+              if (unit.practiceActivityDescription2.isNotEmpty)
+                Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(Icons.info_outline, color: Colors.blue),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            unit.practiceActivityDescription2,
+                            style: const TextStyle(fontSize: 16),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-            const SizedBox(height: 20),
-
-            // Video Section
-            if (hasVideo && _youtubeController != null)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Watch the Video",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: YoutubePlayer(
-                      controller: _youtubeController!,
-                      showVideoProgressIndicator: true,
-                      progressColors: const ProgressBarColors(
-                        playedColor: Colors.red,
-                        handleColor: Colors.redAccent,
-                      ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-
-            const SizedBox(height: 20),
-
-            // Task Site Button
-            if (hasLink)
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),
-                onPressed: () => _launchURL(unit.practiceActivityLink2!),
-                icon: const Icon(Icons.language, color: Colors.white),
-                label: const Text("Go to Task Site", style: TextStyle(color: Colors.white)),
-              ),
-
-            // Upload Button
-            if (hasUploadLink)
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: ElevatedButton.icon(
+      
+              const SizedBox(height: 20),
+      
+              // Video Section
+              if (hasVideo && _youtubeController != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Watch the Video",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 10),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: YoutubePlayer(
+                        controller: _youtubeController!,
+                        showVideoProgressIndicator: true,
+                        progressColors: const ProgressBarColors(
+                          playedColor: Colors.red,
+                          handleColor: Colors.redAccent,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+      
+              const SizedBox(height: 20),
+      
+              // Task Site Button
+              if (hasLink)
+                ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.blue,
                     minimumSize: const Size(double.infinity, 50),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
-                  onPressed: () => _launchURL(unit.practiceUploadLink2!),
-                  icon: const Icon(Icons.upload_file, color: Colors.white),
-                  label:
-                  const Text("Upload Your Answer", style: TextStyle(color: Colors.white)),
+                  onPressed: () => _launchURL(unit.practiceActivityLink2!),
+                  icon: const Icon(Icons.language, color: Colors.white),
+                  label: const Text("Go to Task Site", style: TextStyle(color: Colors.white)),
                 ),
-              ),
-
-            const SizedBox(height: 30),
-
-            // Go to Quiz Button
-            Center(
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFF6100),
-                  minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => QuizScreen(
-                        unitIndex: widget.unitIndex,
-                        subunitIndex: widget.subunitIndex,
-                        subunitTitle: widget.subunitTitle,
-                        unitData: widget.unitData,
-                      ),
+      
+              // Upload Button
+              if (hasUploadLink)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                     ),
-                  );
-                },
-                icon: const Icon(Icons.quiz, color: Colors.white),
-                label: const Text("Go to Quiz",
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    onPressed: () => _launchURL(unit.practiceUploadLink2!),
+                    icon: const Icon(Icons.upload_file, color: Colors.white),
+                    label:
+                    const Text("Upload Your Answer", style: TextStyle(color: Colors.white)),
+                  ),
+                ),
+      
+              const SizedBox(height: 30),
+      
+              // Go to Quiz Button
+              Center(
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFF6100),
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuizScreen(
+                          unitIndex: widget.unitIndex,
+                          subunitIndex: widget.subunitIndex,
+                          subunitTitle: widget.subunitTitle,
+                          unitData: widget.unitData,
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.quiz, color: Colors.white),
+                  label: const Text("Go to Quiz",
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

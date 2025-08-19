@@ -89,144 +89,146 @@ class _SummaryScreenState extends State<SummaryScreen> {
   Widget build(BuildContext context) {
     final unit = widget.unitData;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.subunitTitle,
-          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.subunitTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          backgroundColor: const Color(0xFF010066),
+          centerTitle: true,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: Colors.white),
         ),
-        backgroundColor: const Color(0xFF010066),
-        centerTitle: true,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      body: unit == null || unit.summary.isEmpty
-          ? const Center(
-        child: Text(
-          "No summary available.",
-          style: TextStyle(fontSize: 18, color: Colors.grey),
-        ),
-      )
-          : Container(
-        padding: const EdgeInsets.all(20),
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Lesson Summary",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF010066),
+        body: unit == null || unit.summary.isEmpty
+            ? const Center(
+          child: Text(
+            "No summary available.",
+            style: TextStyle(fontSize: 18, color: Colors.grey),
+          ),
+        )
+            : Container(
+          padding: const EdgeInsets.all(20),
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Lesson Summary",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF010066),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Wrap(
-                  spacing: 4,
-                  runSpacing: 8,
-                  children: List.generate(_sentences.length, (index) {
-                    final sentence = _sentences[index];
-                    final isActive = index == _currentSentenceIndex;
-
-                    return GestureDetector(
-                      onTap: () => _speakNextParagraph(index),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
-                        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: isActive ? const Color(0xFFFFE0B2) : Colors.grey.shade100,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: isActive ? const Color(0xFFFF6100) : Colors.transparent,
-                            width: 1.5,
+              const SizedBox(height: 12),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Wrap(
+                    spacing: 4,
+                    runSpacing: 8,
+                    children: List.generate(_sentences.length, (index) {
+                      final sentence = _sentences[index];
+                      final isActive = index == _currentSentenceIndex;
+      
+                      return GestureDetector(
+                        onTap: () => _speakNextParagraph(index),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: isActive ? const Color(0xFFFFE0B2) : Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: isActive ? const Color(0xFFFF6100) : Colors.transparent,
+                              width: 1.5,
+                            ),
+                          ),
+                          child: Text(
+                            sentence,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                              color: isActive ? const Color(0xFF010066) : Colors.black87,
+                            ),
                           ),
                         ),
-                        child: Text(
-                          sentence,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-                            color: isActive ? const Color(0xFF010066) : Colors.black87,
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Tooltip(
-                  message: "Play",
-                  child: IconButton(
-                    icon: const Icon(Icons.play_circle_fill, size: 36, color: Color(0xFF010066)),
-                    onPressed: () {
-                      if (_sentences.isNotEmpty) {
-                        _speakNextParagraph(0);
-                      }
-                    },
-                  ),
-                ),
-                Tooltip(
-                  message: "Pause",
-                  child: IconButton(
-                    icon: const Icon(Icons.pause_circle_filled, size: 36, color: Colors.amber),
-                    onPressed: _pauseSpeech,
-                  ),
-                ),
-                Tooltip(
-                  message: "Stop",
-                  child: IconButton(
-                    icon: const Icon(Icons.stop_circle, size: 36, color: Colors.red),
-                    onPressed: _stopSpeaking,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            if (_isSpeaking)
-              LinearProgressIndicator(
-                backgroundColor: Colors.grey.shade300,
-                valueColor: const AlwaysStoppedAnimation(Color(0xFFFF6100)),
-              ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () {
-                _flutterTts.stop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => InClassActivityScreen(
-                      unitIndex: widget.unitIndex,
-                      subunitIndex: widget.subunitIndex,
-                      subunitTitle: widget.subunitTitle,
-                      unitData: widget.unitData,
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Tooltip(
+                    message: "Play",
+                    child: IconButton(
+                      icon: const Icon(Icons.play_circle_fill, size: 36, color: Color(0xFF010066)),
+                      onPressed: () {
+                        if (_sentences.isNotEmpty) {
+                          _speakNextParagraph(0);
+                        }
+                      },
                     ),
                   ),
-                );
-              },
-              icon: const Icon(Icons.arrow_forward, color: Colors.white),
-              label: const Text(
-                "Next: In-Class Activity",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Tooltip(
+                    message: "Pause",
+                    child: IconButton(
+                      icon: const Icon(Icons.pause_circle_filled, size: 36, color: Colors.amber),
+                      onPressed: _pauseSpeech,
+                    ),
+                  ),
+                  Tooltip(
+                    message: "Stop",
+                    child: IconButton(
+                      icon: const Icon(Icons.stop_circle, size: 36, color: Colors.red),
+                      onPressed: _stopSpeaking,
+                    ),
+                  ),
+                ],
               ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF010066),
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+              const SizedBox(height: 12),
+              if (_isSpeaking)
+                LinearProgressIndicator(
+                  backgroundColor: Colors.grey.shade300,
+                  valueColor: const AlwaysStoppedAnimation(Color(0xFFFF6100)),
                 ),
-                minimumSize: const Size(double.infinity, 50),
+              const SizedBox(height: 20),
+              ElevatedButton.icon(
+                onPressed: () {
+                  _flutterTts.stop();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => InClassActivityScreen(
+                        unitIndex: widget.unitIndex,
+                        subunitIndex: widget.subunitIndex,
+                        subunitTitle: widget.subunitTitle,
+                        unitData: widget.unitData,
+                      ),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                label: const Text(
+                  "Next: In-Class Activity",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF010066),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

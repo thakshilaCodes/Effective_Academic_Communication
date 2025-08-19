@@ -41,15 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
       'subunits': [
         {'name': 'Tenses', 'unitIndex': 5},
         {'name': 'Simple present', 'unitIndex': 6},
-        {'name': 'Present continuous', 'unitIndex': null},
-        {'name': 'Present perfect', 'unitIndex': null},
-        {'name': 'Present perfect continuous', 'unitIndex': null},
-        {'name': 'Simple past', 'unitIndex': null},
-        {'name': 'Past continuous', 'unitIndex': null},
-        {'name': 'Past perfect continuous', 'unitIndex': null},
-        {'name': 'Simple future', 'unitIndex': null},
-        {'name': 'Future Continuous', 'unitIndex': null},
-        {'name': 'Future perfect', 'unitIndex': null},
+        {'name': 'Present continuous', 'unitIndex': 7},
+        {'name': 'Present perfect', 'unitIndex': 8},
+        {'name': 'Present perfect continuous', 'unitIndex': 9},
+        {'name': 'Simple past', 'unitIndex': 10},
+        {'name': 'Past continuous', 'unitIndex': 11},
+        {'name': 'Past perfect continuous', 'unitIndex': 12},
+        {'name': 'Simple future', 'unitIndex': 13},
+        {'name': 'Future Continuous', 'unitIndex': 14},
+        {'name': 'Future perfect', 'unitIndex': 15},
       ]
     },
     {
@@ -205,36 +205,43 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Select a Lesson',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black87),
-                ),
-                ...subunits.map<Widget>((subunit) {
-                  int subIndex = subunits.indexOf(subunit);
-                  return ListTile(
-                    leading: const Icon(Icons.play_circle_outline, color: Color(0xFF010066)),
-                    title: Text(
-                      subunit['name'],
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12),
-                    onTap: () {
-                      Navigator.pop(context);
-                      _navigateToScreen(unitIndex, subIndex);
-                    },
-                  );
-                }).toList(),
-              ],
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom +
+                MediaQuery.of(context).padding.bottom,
+          ),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(5),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Select a Lesson',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black87),
+                  ),
+                  ...subunits.map<Widget>((subunit) {
+                    int subIndex = subunits.indexOf(subunit);
+                    return ListTile(
+                      leading: const Icon(Icons.play_circle_outline, color: Color(0xFF010066)),
+                      title: Text(
+                        subunit['name'],
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 12),
+                      onTap: () {
+                        Navigator.pop(context);
+                        _navigateToScreen(unitIndex, subIndex);
+                      },
+                    );
+                  }).toList(),
+                ],
+              ),
             ),
           ),
         );
@@ -244,105 +251,106 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF7F9FC),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF010066),
-        title: Text(
-          'Welcome, ${widget.username} 👋',
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.white),
-        ),
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-            decoration: const BoxDecoration(
-              color: Color(0xFF010066),
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(32), bottomRight: Radius.circular(32)),
-            ),
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Your Learning Journey 📚",
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
-                ),
-                SizedBox(height: 4),
-                Text(
-                  "Explore units below and start learning.",
-                  style: TextStyle(color: Colors.white70),
-                ),
-              ],
-            ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF7F9FC),
+        appBar: AppBar(
+          backgroundColor: const Color(0xFF010066),
+          title: Text(
+            'Welcome, ${widget.username} 👋',
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20,color: Colors.white),
           ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: GridView.builder(
-                itemCount: units.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 0.85,
-                ),
-                itemBuilder: (context, index) {
-                  final unit = units[index];
-                  return GestureDetector(
-                    onTap: () => _showSubunitModal(index),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 6,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          CircleAvatar(
-
-                            backgroundColor: const Color(0xFFFF6100),
-                            radius: 35,
-                            child: Icon(unit['icon'], color: Colors.white),
-                          ),
-                          const SizedBox(height: 12),
-                          Expanded(
-                            child: Text(
-                              unit['title'],
-                              textAlign: TextAlign.center,
-                              maxLines: 4,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                                color: Color(0xFF010066),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          const Icon(Icons.touch_app_rounded, color: Colors.grey, size: 18),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+          elevation: 0,
+          iconTheme: const IconThemeData(color: Colors.white),
+        ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+              decoration: const BoxDecoration(
+                color: Color(0xFF010066),
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(32), bottomRight: Radius.circular(32)),
+              ),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Your Learning Journey 📚",
+                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    "Explore units below and start learning.",
+                    style: TextStyle(color: Colors.white70),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: GridView.builder(
+                  itemCount: units.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    childAspectRatio: 0.85,
+                  ),
+                  itemBuilder: (context, index) {
+                    final unit = units[index];
+                    return GestureDetector(
+                      onTap: () => _showSubunitModal(index),
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 6,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: const Color(0xFFFF6100),
+                              radius: 35,
+                              child: Icon(unit['icon'], color: Colors.white),
+                            ),
+                            const SizedBox(height: 12),
+                            Expanded(
+                              child: Text(
+                                unit['title'],
+                                textAlign: TextAlign.center,
+                                maxLines: 4,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                  color: Color(0xFF010066),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            const Icon(Icons.touch_app_rounded, color: Colors.grey, size: 18),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

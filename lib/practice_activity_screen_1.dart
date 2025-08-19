@@ -99,136 +99,138 @@ class _PracticeActivityScreenState extends State<PracticeActivityScreen> {
     final hasQuestions = unit?.practiceActivityQuestions1?.isNotEmpty ?? false;
     final canProceed = hasQuestions ? isSubmitted : true;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.subunitTitle, style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
-        backgroundColor: const Color(0xFF010066),
-      ),
-      body: unit == null
-          ? const Center(child: Text("No practice activity available.", style: TextStyle(fontSize: 18, color: Colors.grey)))
-          : SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (unit.practiceActivityDescription1.isNotEmpty)
-              Card(
-                color: Colors.indigo.shade50,
-                elevation: 2,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Text(
-                    unit.practiceActivityDescription1,
-                    style: const TextStyle(fontSize: 16, height: 1.4),
-                  ),
-                ),
-              ),
-
-            const SizedBox(height: 20),
-
-            if (hasLink)
-              _buildButton("Go to Task Site", unit!.practiceActivityLink!, Colors.blue),
-
-            if (hasUploadLink)
-              _buildButton("Upload Your Answer", unit!.practiceUploadLink!, Colors.green),
-
-            if (hasVideo && _youtubeController != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: YoutubePlayer(
-                  controller: _youtubeController!,
-                  showVideoProgressIndicator: true,
-                  progressColors: const ProgressBarColors(
-                    playedColor: Colors.red,
-                    handleColor: Colors.redAccent,
-                  ),
-                ),
-              ),
-
-            if (hasQuestions)
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: unit!.practiceActivityQuestions1!.length,
-                itemBuilder: (context, index) {
-                  final question = unit.practiceActivityQuestions1![index];
-                  return Card(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Q${index + 1}: ${question.questionText}",
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                          ),
-                          const SizedBox(height: 8),
-                          TextField(
-                            controller: controllers[index],
-                            decoration: InputDecoration(
-                              hintText: "Type your answer...",
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                              filled: true,
-                              fillColor: Colors.grey.shade100,
-                            ),
-                            enabled: !isSubmitted,
-                          ),
-                          if (isSubmitted)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: Text(
-                                "Correct Answer: ${question.correctAnswer}",
-                                style: const TextStyle(color: Colors.green),
-                              ),
-                            ),
-                        ],
-                      ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.subunitTitle, style: const TextStyle(fontWeight: FontWeight.bold,color: Colors.white)),
+          backgroundColor: const Color(0xFF010066),
+        ),
+        body: unit == null
+            ? const Center(child: Text("No practice activity available.", style: TextStyle(fontSize: 18, color: Colors.grey)))
+            : SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (unit.practiceActivityDescription1.isNotEmpty)
+                Card(
+                  color: Colors.indigo.shade50,
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text(
+                      unit.practiceActivityDescription1,
+                      style: const TextStyle(fontSize: 16, height: 1.4),
                     ),
-                  );
-                },
-              ),
-
-            if (hasQuestions && !isSubmitted)
-              ElevatedButton.icon(
-                icon: const Icon(Icons.check),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFF6100),
-                  minimumSize: const Size(double.infinity, 50),
-                ),
-                onPressed: validateAnswers,
-                label: const Text("Submit Answers", style: TextStyle(fontSize: 16)),
-              ),
-
-            if (canProceed)
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: ElevatedButton.icon(
-                  icon: const Icon(Icons.arrow_forward),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF010066),
-                    minimumSize: const Size(double.infinity, 50),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PracticeActivityScreen2(
-                          unitIndex: widget.unitIndex,
-                          subunitIndex: widget.subunitIndex,
-                          subunitTitle: widget.subunitTitle,
-                          unitData: widget.unitData,
+                ),
+      
+              const SizedBox(height: 20),
+      
+              if (hasLink)
+                _buildButton("Go to Task Site", unit!.practiceActivityLink!, Colors.blue),
+      
+              if (hasUploadLink)
+                _buildButton("Upload Your Answer", unit!.practiceUploadLink!, Colors.green),
+      
+              if (hasVideo && _youtubeController != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: YoutubePlayer(
+                    controller: _youtubeController!,
+                    showVideoProgressIndicator: true,
+                    progressColors: const ProgressBarColors(
+                      playedColor: Colors.red,
+                      handleColor: Colors.redAccent,
+                    ),
+                  ),
+                ),
+      
+              if (hasQuestions)
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: unit!.practiceActivityQuestions1!.length,
+                  itemBuilder: (context, index) {
+                    final question = unit.practiceActivityQuestions1![index];
+                    return Card(
+                      margin: const EdgeInsets.only(bottom: 16),
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Q${index + 1}: ${question.questionText}",
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                            ),
+                            const SizedBox(height: 8),
+                            TextField(
+                              controller: controllers[index],
+                              decoration: InputDecoration(
+                                hintText: "Type your answer...",
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                                filled: true,
+                                fillColor: Colors.grey.shade100,
+                              ),
+                              enabled: !isSubmitted,
+                            ),
+                            if (isSubmitted)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  "Correct Answer: ${question.correctAnswer}",
+                                  style: const TextStyle(color: Colors.green),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     );
                   },
-                  label: const Text("Next: Practice Activity 2", style: TextStyle(fontSize: 16)),
                 ),
-              ),
-          ],
+      
+              if (hasQuestions && !isSubmitted)
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.check),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFF6100),
+                    minimumSize: const Size(double.infinity, 50),
+                  ),
+                  onPressed: validateAnswers,
+                  label: const Text("Submit Answers", style: TextStyle(fontSize: 16)),
+                ),
+      
+              if (canProceed)
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.arrow_forward),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF010066),
+                      minimumSize: const Size(double.infinity, 50),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PracticeActivityScreen2(
+                            unitIndex: widget.unitIndex,
+                            subunitIndex: widget.subunitIndex,
+                            subunitTitle: widget.subunitTitle,
+                            unitData: widget.unitData,
+                          ),
+                        ),
+                      );
+                    },
+                    label: const Text("Next: Practice Activity 2", style: TextStyle(fontSize: 16)),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

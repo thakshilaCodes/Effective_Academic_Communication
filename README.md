@@ -38,17 +38,14 @@ You can download the app here:
 ## 🖼️ Screenshots
 
 Here are some previews of the app in action:
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+  <img src="screenshots/splash.jpg" alt="splash" style="width: 300px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+  <img src="screenshots/onboarding1.jpg" alt="onboarding1" style="width: 300px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+  <img src="screenshots/onboarding2.jpg" alt="onboarding2" style="width: 300px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+</div>
 
-<p float="left">
-  <img src="screenshots/splash.jpg" width="540"  alt="splash"/>
-  <img src="screenshots/onboarding1.jpg" width="540"  alt="onboarding1"/>
-  <img src="screenshots/onboarding2.jpg" width="540"  alt="onboarding2"/>
 
 
-  
-</p>
-
-*(Make sure to add your actual screenshots inside a `screenshots/` folder in your project.)*
 
 ---
 

@@ -42,10 +42,10 @@ Here are some previews of the app in action:
   <img src="screenshots/splash.jpg" width="230" alt="Splash"/>
   <img src="screenshots/onboarding1.jpg" width="230" alt="Onboarding 1"/>
   <img src="screenshots/onboarding2.jpg" width="230" alt="Onboarding 2"/>
-  <img src="screenshots/welcome.jpg" width="230" alt="Welcome"/>
+  
 </p>
-
 <p align="center">
+<img src="screenshots/welcome.jpg" width="230" alt="Welcome"/>
   <img src="screenshots/home.jpg" width="230" alt="Home"/>
 
 </p>

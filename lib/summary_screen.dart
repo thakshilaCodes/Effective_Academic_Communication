@@ -24,6 +24,7 @@ class SummaryScreen extends StatefulWidget {
 class _SummaryScreenState extends State<SummaryScreen> {
   final FlutterTts _flutterTts = FlutterTts();
   bool _isSpeaking = false;
+  bool _isPaused = false;
 
   List<String> _sentences = [];
   int _currentSentenceIndex = -1;
@@ -39,7 +40,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
   void _setupTts() async {
     await _flutterTts.setLanguage("en-US");
-    await _flutterTts.setSpeechRate(0.4);
+    await _flutterTts.setSpeechRate(0.5);
     await _flutterTts.setPitch(1.0);
 
     _flutterTts.setCompletionHandler(() async {
@@ -61,20 +62,35 @@ class _SummaryScreenState extends State<SummaryScreen> {
   Future<void> _speakNextParagraph(int index) async {
     if (index >= 0 && index < _sentences.length) {
       await _flutterTts.stop();
-      setState(() => _currentSentenceIndex = index);
+      setState(() {
+        _currentSentenceIndex = index;
+        _isPaused = false;
+      });
       await _flutterTts.speak(_sentences[index]);
     }
   }
 
-  Future<void> _pauseSpeech() async {
-    await _flutterTts.pause();
-    setState(() => _isSpeaking = false);
+  Future<void> _pauseOrResumeSpeech() async {
+    if (_isSpeaking) {
+      await _flutterTts.pause();
+      setState(() {
+        _isSpeaking = false;
+        _isPaused = true;
+      });
+    } else if (_isPaused) {
+      await _flutterTts.speak(_sentences[_currentSentenceIndex]);
+      setState(() {
+        _isSpeaking = true;
+        _isPaused = false;
+      });
+    }
   }
 
   Future<void> _stopSpeaking() async {
     await _flutterTts.stop();
     setState(() {
       _isSpeaking = false;
+      _isPaused = false;
       _currentSentenceIndex = -1;
     });
   }
@@ -115,7 +131,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "Lesson Summary",
+                "🕊️Lesson Summary",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -176,10 +192,10 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     ),
                   ),
                   Tooltip(
-                    message: "Pause",
+                    message: "Pause/Resume",
                     child: IconButton(
                       icon: const Icon(Icons.pause_circle_filled, size: 36, color: Colors.amber),
-                      onPressed: _pauseSpeech,
+                      onPressed: _pauseOrResumeSpeech,
                     ),
                   ),
                   Tooltip(
@@ -191,12 +207,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
-              if (_isSpeaking)
-                LinearProgressIndicator(
-                  backgroundColor: Colors.grey.shade300,
-                  valueColor: const AlwaysStoppedAnimation(Color(0xFFFF6100)),
-                ),
               const SizedBox(height: 20),
               ElevatedButton.icon(
                 onPressed: () {
@@ -213,17 +223,14 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     ),
                   );
                 },
-                icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                icon: const Icon(Icons.next_plan_outlined, color: Colors.white),
                 label: const Text(
                   "Next: In-Class Activity",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF010066),
                   padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
                   minimumSize: const Size(double.infinity, 50),
                 ),
               ),

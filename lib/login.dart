@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(
                       labelText: "Enter your name",
                       labelStyle: const TextStyle(color: Color(0xFF010066)),
-                      hintText: "Alex",
+                      hintText: "Your name",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
                       ),

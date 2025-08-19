@@ -43,6 +43,9 @@ dependencies:
   animated_text_kit: ^4.2.3
   flutter_native_splash: ^2.4.4
   url_launcher: ^6.3.1
+  video_player: ^2.10.0
+  confetti: ^0.8.0
+
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +70,7 @@ flutter:
   uses-material-design: true
   assets:
      - assets/logo02.png
+     - assets/
      - assets/logo2.png
      - assets/onboarding/ob1.jpg
      - assets/onboarding/ob2.jpg

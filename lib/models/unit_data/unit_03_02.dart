@@ -1,117 +1,103 @@
 import '../unit_model.dart';
 
-// Present Continuous Tense
 final UnitModel unit3_2 = UnitModel(
   unitIndex: 7,
   unitName: "Present Continuous Tense",
   introductionText: """
-Welcome to the Present Continuous Tense lesson! Now that you've mastered the simple present tense, it's time to explore how we express actions happening right now or temporary situations.
-
-The present continuous tense is essential for describing ongoing actions and temporary states. Let's dive into this dynamic tense!
+Dear students,
+In the previous lesson, we covered the Simple Present Tense. Today, we will focus on the Present Continuous Tense, which, along with the Simple Present, is frequently used in daily communication. Before we begin, take a moment to review the lesson objectives so that you understand what you are expected to achieve by the end of this lesson.
 
 Lesson Objectives
 By the end of this lesson, you should be able to:
-1. Understand the concept of present continuous tense and its function in expressing ongoing actions and temporary situations.
-2. Learn the structure: Subject + am/is/are + verb(-ing) for affirmative, negative, and interrogative sentences.
-3. Distinguish between present simple and present continuous usage in context.
-4. Use present continuous appropriately in real-life communication scenarios.
+1. Understand the key uses of the Present Continuous Tense.
+2. Learn the structure of the Present Continuous Tense.
+3. Distinguish between the Present Continuous and Simple Present Tense.
+4. Use the Present Continuous Tense correctly in different contexts.
   """,
 
   preClassActivityDescription: """
-🎥 Watch this engaging video about what people are doing right now around the world!
-  """,
+Watch the video linked below and complete the quiz provided. Once you have completed the quiz, take screenshots of your results and upload them as proof of completion.""",
 
-  preClassActivityVideo: "https://www.youtube.com/watch?v=1gF3yj5xdQE",
+  preClassActivityVideo: "https://www.youtube.com/watch?v=7O-Ye9HF2DI",
+  preClassActivityLink: "https://www.englishclub.com/grammar/verb-tenses_present-continuous_quiz.php#google_vignette",
+  preClassActivityUploadLink: "https://courseweb.sliit.lk/mod/assign/view.php?id=375155",
 
   practiceActivityDescription1: """
-Step 1: Go to a public place (café, park, mall) or look out your window.
-Step 2: Observe people and write 10 sentences about what they are doing right now.
-Step 3: Use the present continuous tense (e.g., "A woman is walking her dog," "Children are playing in the park").
-Step 4: Take a photo of your location and upload both the photo and your sentences.
+Step 1: Use a free chatbot like ChatGPT (chat.openai.com) or Poe to interact in real-time.
 
-This activity helps you practice describing ongoing actions in real-time!
-  """,
-  practiceActivityLink: "https://example.com/observation-activity",
-  practiceUploadLink: "https://example.com/upload-practice-activity",
+Step 2: Introduce yourself to the chatbot and ask: "What are you doing right now?" Observe how it responds using the Present Continuous Tense.
+
+Step 3: Describe five things happening around you using the Present Continuous Tense.
+Example: "I am sitting on my bed and typing on my phone. My brother is watching TV."
+
+Step 4: Ask the chatbot to describe a scene using the Present Continuous Tense.
+Example: "Describe what is happening in a busy restaurant right now."
+
+Step 5: Take a screenshot of the most interesting part of the conversation and upload it as proof of completion.""",
+
+  practiceUploadLink: "https://courseweb.sliit.lk/mod/assign/view.php?id=375156",
 
   practiceActivityDescription2: """
-Complete interactive exercises on present continuous vs. present simple.
-Step 1: Click the link below to access the grammar exercises.
-Step 2: Complete all 15 questions about ongoing actions.
-Step 3: Take screenshots of your completed exercises.
-  """,
-  practiceActivityLink2: "https://www.liveworksheets.com/w/en/english-second-language-esl/185432",
-  practiceUploadLink2: "https://example.com/upload-practice-activity2",
+Watch the videos linked below and complete the quiz. After finishing, upload screenshots of your results as proof.""",
+
+  practiceActivityLink2: "https://www.liveworksheets.com/w/en/english-second-language-esl/63676",
+  practiceUploadLink2: "https://courseweb.sliit.lk/mod/assign/view.php?id=375157",
 
   instructionsText: """
-Watch the comprehensive lesson on present continuous tense. Pay attention to the difference between actions happening now versus habitual actions. Take notes on the formation rules and common time expressions used with this tense.
-  """,
+Now that you have watched the video and completed a simple quiz, you should have a basic understanding of the Present Continuous Tense. Next, watch the recorded lecture to learn more about its usage, structure, and how it differs from the Simple Present Tense.""",
 
-  instructionVideoId: "jnNh5XrGqv4",
+  instructionVideoId: "https://lecturecapture.sliit.lk/eplayer.php?id=R29hcVE5ZE5vOF82NzY1OQ==",
 
   summary: """
-In this lesson, we learned about the present continuous tense for expressing:
-- Actions happening right now
-- Temporary situations
-- Future arrangements
-We practiced forming sentences with am/is/are + verb(-ing) and distinguished it from simple present usage.
-  """,
+In this lesson, we explored the Present Continuous Tense, focusing on its structure and usage. We discussed its key functions, including describing actions happening right now, temporary actions, and future plans. Additionally, we learned to form affirmative, negative, and interrogative sentences in the Present Continuous Tense and distinguished it from the Simple Present Tense.""",
 
   inClassActivity: """
-Get ready for role-play activities where you'll describe what your classmates are doing in real-time!
-  """,
+In class, we will engage in some interactive and dynamic activities to practice the Present Continuous Tense. These activities are designed to help you reinforce what you have learned and encourage active participation. We’ll focus on real-life scenarios, where you’ll describe things happening around you, role-play conversations, and practice using the Present Continuous Tense in various contexts. These activities will make learning both fun and effective!""",
 
   quizQuestions: [
     QuizQuestion(
-      question: '1) Which sentence is in the present continuous tense?',
+      question: "Which sentence is in the Present Continuous Tense?",
       options: [
-        'a) She plays tennis every day.',
-        'b) She is playing tennis now.',
-        'c) She played tennis yesterday.',
-        'd) She will play tennis tomorrow.',
+        "She drinks coffee every morning.",
+        "She is drinking coffee right now.",
+        "She drank coffee yesterday.",
+        "She will drink coffee tomorrow.",
       ],
       correctOptionIndex: 1,
+      isTextAnswer: false,
     ),
     QuizQuestion(
-      question: '2) What is the correct present continuous form of "They (study)"?',
+      question: "Which of the following sentences is incorrect?",
       options: [
-        'a) They are study.',
-        'b) They studying.',
-        'c) They are studying.',
-        'd) They studies.',
+        "They are playing football in the park.",
+        "She is not working at the moment.",
+        "We am studying English now.",
+        "He is watching TV right now.",
       ],
       correctOptionIndex: 2,
+      isTextAnswer: false,
     ),
     QuizQuestion(
-      question: '3) Which time expression is commonly used with present continuous?',
+      question: "Which question is correctly formed in the Present Continuous Tense?",
       options: [
-        'a) Every day',
-        'b) Usually',
-        'c) Right now',
-        'd) Always',
-      ],
-      correctOptionIndex: 2,
-    ),
-    QuizQuestion(
-      question: '4) Choose the correct negative form: "I am not _____ TV."',
-      options: [
-        'a) watch',
-        'b) watching',
-        'c) watches',
-        'd) watched',
+        "Do you watching TV?",
+        "Are you watching TV?",
+        "You are watching TV?",
+        "You watching TV?",
       ],
       correctOptionIndex: 1,
+      isTextAnswer: false,
     ),
     QuizQuestion(
-      question: '5.1 What are you doing right now?',
-      correctTextAnswer: 'I am taking a quiz about English grammar.',
-      isTextAnswer: true,
-    ),
-    QuizQuestion(
-      question: '5.2 Describe what someone in your family is doing at this moment.',
-      correctTextAnswer: 'My sister is cooking dinner in the kitchen.',
-      isTextAnswer: true,
+      question: "What is the correct negative form of this sentence? \"He is writing a letter.\"",
+      options: [
+        "He not writing a letter.",
+        "He isn't write a letter.",
+        "He is not writing a letter.",
+        "He don’t writing a letter.",
+      ],
+      correctOptionIndex: 2,
+      isTextAnswer: false,
     ),
   ],
 );
-

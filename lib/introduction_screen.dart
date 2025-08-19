@@ -26,6 +26,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
   List<String> paragraphs = [];
   int highlightedParagraphIndex = -1;
   bool isPlaying = false;
+  bool isPaused = false;
 
   @override
   void initState() {
@@ -41,7 +42,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
 
   void _setupTts() {
     flutterTts.setLanguage("en-US");
-    flutterTts.setSpeechRate(0.4);
+    flutterTts.setSpeechRate(0.5);
     flutterTts.setPitch(1.0);
 
     flutterTts.setCompletionHandler(() {
@@ -51,6 +52,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
         setState(() {
           highlightedParagraphIndex = -1;
           isPlaying = false;
+          isPaused = false;
         });
       }
     });
@@ -60,6 +62,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
     setState(() {
       highlightedParagraphIndex = index;
       isPlaying = true;
+      isPaused = false;
     });
     await flutterTts.speak(paragraphs[index]);
   }
@@ -68,8 +71,23 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
     await flutterTts.stop();
     setState(() {
       isPlaying = false;
+      isPaused = false;
       highlightedParagraphIndex = -1;
     });
+  }
+
+  Future<void> _pauseOrResumeSpeaking() async {
+    if (isPlaying && !isPaused) {
+      await flutterTts.pause();
+      setState(() {
+        isPaused = true;
+      });
+    } else if (isPlaying && isPaused) {
+      await flutterTts.speak(paragraphs[highlightedParagraphIndex]);
+      setState(() {
+        isPaused = false;
+      });
+    }
   }
 
   @override
@@ -85,17 +103,22 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            unitName,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+          title: Tooltip(
+            message: unitName, // This shows the full unitName when hovered or long-pressed
+            child: Text(
+              unitName,
+              overflow: TextOverflow.ellipsis, // Ensures long text is truncated
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
           backgroundColor: const Color(0xFF010066),
           elevation: 2,
           iconTheme: const IconThemeData(color: Colors.white),
         ),
+      
         body: LayoutBuilder(
           builder: (context, constraints) => Container(
             color: Colors.white,
@@ -181,10 +204,14 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                       ),
                     ),
                     Tooltip(
-                      message: "Pause",
+                      message: isPaused ? "Resume" : "Pause",
                       child: IconButton(
-                        icon: const Icon(Icons.pause_circle_filled, size: 36, color: Colors.amber),
-                        onPressed: () => flutterTts.pause(),
+                        icon: Icon(
+                          isPaused ? Icons.play_arrow : Icons.pause_circle_filled,
+                          size: 36,
+                          color: Colors.amber,
+                        ),
+                        onPressed: _pauseOrResumeSpeaking,
                       ),
                     ),
                     Tooltip(
@@ -203,9 +230,8 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                   width: double.infinity,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFF6100),
+                      backgroundColor: const Color(0xFF010066),
                       padding: const EdgeInsets.symmetric(vertical: 14),
-      
                       elevation: 2,
                     ),
                     onPressed: () async {
@@ -222,7 +248,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                         ),
                       );
                     },
-                    icon: const Icon(Icons.arrow_forward, color: Colors.white),
+                    icon: const Icon(Icons.class_rounded, color: Colors.white),
                     label: const Text(
                       "Next: Pre-Class Activity",
                       style: TextStyle(
@@ -240,5 +266,4 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
       ),
     );
   }
-
 }

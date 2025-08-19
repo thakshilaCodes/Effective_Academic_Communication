@@ -4,109 +4,146 @@ final UnitModel unit3_10 = UnitModel(
   unitIndex: 15,
   unitName: "Future Perfect Tense",
   introductionText: """
-Welcome to the Future Perfect Tense lesson! This tense helps us describe actions that will be completed before a certain point in the future.
+Hello and welcome! In this lesson, we’ll explore the Future Perfect Tense—a fascinating structure that allows you to talk about actions that will be completed at a certain point in the future. This tense is especially useful when planning, forecasting, or tracking progress—things you often do in project management, software development, and computing tasks.
 
-It’s especially useful when we want to set deadlines, expectations, or talk about achievements by a specific time.
+Imagine you’re managing a coding project, and you want to explain what will be finished before a deadline:
+We will have completed the interface design by Friday.
 
-Lesson Objectives
-By the end of this lesson, you should be able to:
-1. Understand the concept of future perfect for completed future actions.
-2. Learn the structure: Subject + will have + past participle.
-3. Use future perfect to set deadlines and expectations.
-4. Combine future perfect with time expressions (e.g., by tomorrow, by next year).
-  """,
+Here, will have completed is the Future Perfect Tense. It shows that an action will be finished before another future moment. It’s like you’re predicting the past—from a future point of view!
+
+By the end of this lesson, you will be able to:
+1. Understand the structure and uses of the Future Perfect tense.
+2. Form sentences using will + have + past participle.
+3. Use the tense confidently in tech-related spoken contexts.
+
+Let’s jump in and start building your grammar for the future!""",
 
   preClassActivityDescription: """
-🎥 Watch this video that shows how future perfect is used in real-life examples.
-  """,
+Before we begin our lesson, let’s share some interesting things… 
+Now, Imagine you're in the future—it's Sunday night.  Look back at your week and list 05 things you will have completed by then. Think of studies, projects, or personal goals. 
+Then, in the chat, discuss the things you will have completed by the upcoming Sunday. Write sentences using the Future Perfect Tense.""",
 
-  preClassActivityVideo: "https://www.youtube.com/watch?v=sffSfh7zO4I",
+  preClassActivityUploadLink: "https://courseweb.sliit.lk/mod/chat/view.php?id=377185",
+
 
   practiceActivityDescription1: """
-Step 1: Imagine it’s the year 2030. Write 10 sentences about what you will have achieved by then.
-Step 2: For example: "I will have graduated from university," "We will have built a new house."
-Step 3: Create a short paragraph predicting your life in 10 years using future perfect.
-Step 4: Upload your sentences and paragraph.
-  """,
-  practiceActivityLink: "https://example.com/future-perfect-scenarios",
-  practiceUploadLink: "https://example.com/upload-future-perfect",
+Use the correct Future Perfect form of the verbs to complete the sentences.""",
+
+  practiceActivityQuestions1: [
+    PracticeQuestion1(
+      questionText: "By the time you arrive, I __________ (install) the new software.",
+      correctAnswer: "will have installed",
+    ),
+    PracticeQuestion1(
+      questionText: "They __________ (finish) the front-end work before the client meeting.",
+      correctAnswer: "will have finished",
+    ),
+    PracticeQuestion1(
+      questionText: "By next semester, we __________ (complete) all core modules.",
+      correctAnswer: "will have completed",
+    ),
+    PracticeQuestion1(
+      questionText: "She __________ (submit) the final report by 8 PM.",
+      correctAnswer: "will have submitted",
+    ),
+    PracticeQuestion1(
+      questionText: "The developers __________ (fix) all bugs before launch day.",
+      correctAnswer: "will have fixed",
+    ),
+    PracticeQuestion1(
+      questionText: "He __________ (not attend) the seminar by the time we start.",
+      correctAnswer: "will not have attended / won’t have attended",
+    ),
+    PracticeQuestion1(
+      questionText: "We __________ (test) the payment gateway before the site goes live.",
+      correctAnswer: "will have tested",
+    ),
+    PracticeQuestion1(
+      questionText: "You __________ (write) at least five blog posts for the company website.",
+      correctAnswer: "will have written",
+    ),
+    PracticeQuestion1(
+      questionText: "The team __________ (upload) the code to GitHub by tomorrow.",
+      correctAnswer: "will have uploaded",
+    ),
+    PracticeQuestion1(
+      questionText: "I __________ (not check) the analytics report by this evening.",
+      correctAnswer: "will not have checked / won’t have checked",
+    ),
+  ],
 
   practiceActivityDescription2: """
-Practice using 'will have + past participle' with time markers.
-Step 1: Access the interactive activities below.
-Step 2: Complete all exercises carefully.
-Step 3: Upload screenshots of your completed activities.
-  """,
-  practiceActivityLink2: "https://www.liveworksheets.com/w/en/english-second-language-esl/198760",
-  practiceUploadLink2: "https://example.com/upload-future-perfect2",
+Now, you're going to talk about what you will have done if you were the President of Sri Lanka. Think of this as a time-travel log where you're reporting what you've already finished by a specific point in the future.
+
+Step 1: Visit this voice recording tool:
+
+Step 2: Click the red “Record” button and speak five Future Perfect sentences of what you will have done if you were the President of Sri Lanka.
+
+Step 3: After recording, click “Save & Share” and copy the audio link and submit it.""",
+
+  practiceActivityLink2: "https://vocaroo.com",
+  practiceUploadLink2: "https://courseweb.sliit.lk/mod/assign/view.php?id=375181",
 
   instructionsText: """
-Notice how 'will have + past participle' is used to describe an action finished before a future moment. Time phrases like 'by tomorrow' or 'by the end of the year' are key signals.
-  """,
+Watch the short video given below, which explains how to use the Future Perfect Tense in real-life conversations. Focus on the formula and examples. You can take notes on the structure, the keywords like ‘by next week, by 2025, before the deadline’, and contexts where it's commonly used.""",
 
-  instructionVideoId: "0knzYd-5hMY",
+  instructionVideoId: " https://lecturecapture.sliit.lk/eplayer.php?id=ZmFtWTk0dHRIc182NzgyOQ==",
 
   summary: """
-In this lesson, we learned:
-- Future perfect describes actions completed before a future point.
-- Structure: Subject + will have + past participle.
-- Examples: "By next week, I will have finished the project."
-- Useful for deadlines, achievements, and expectations.
-  """,
+Well done! You’ve just added a powerful tense to your spoken English toolbox. The Future Perfect Tense allows you to describe actions that will be completed before a specific point in the future—a structure that’s especially helpful when planning deadlines, coding sprints, or project delivery dates.
+
+Whether you're forecasting progress in your tech presentations or writing professional emails, this tense can make your language more precise and forward-thinking.
+
+Keep practicing, and soon this tense will become second nature in your spoken communication.""",
 
   inClassActivity: """
-Class discussion: "By 2050, what will humanity have achieved?" Students share future perfect predictions.
-  """,
+Well done on completing the lesson!
+
+Now that you’ve explored how to use the Future Perfect Tense in your speaking, it’s time to reinforce what you’ve learned together. During our classroom session, we’ll dive into some engaging tasks and real-life scenarios where you can apply this tense naturally.
+
+If you’ve got any doubts or want more practice, don’t hesitate to bring your questions—we’ll go through them as a group, and your lecturer will guide you through any tricky points.
+
+Can’t wait to see you and hear your “future accomplishments” in action!""",
 
   quizQuestions: [
     QuizQuestion(
-      question: '1) Choose the correct future perfect sentence:',
+      question: "Choose the sentence that uses the Future Perfect Tense correctly:",
       options: [
-        'a) She will have finished her homework by 8 PM.',
-        'b) She will finished her homework by 8 PM.',
-        'c) She will finishing her homework by 8 PM.',
-        'd) She will has finished her homework by 8 PM.',
+        "a) I have finished the task by Friday.",
+        "b) I will be finishing the task by Friday.",
+        "c) I will have finished the task by Friday.",
+        "d) I finish the task by Friday.",
       ],
-      correctOptionIndex: 0,
+      correctOptionIndex: 2,
     ),
     QuizQuestion(
-      question: '2) Complete: "By next year, I _____ my driving license."',
+      question: "What is the correct structure of the Future Perfect Tense?",
       options: [
-        'a) will have got',
-        'b) will got',
-        'c) will have get',
-        'd) will getting',
+        "a) will + be + verb-ing",
+        "b) will + have + past participle",
+        "c) have + been + verb-ing",
+        "d) had + verb",
       ],
-      correctOptionIndex: 0,
+      correctOptionIndex: 1,
     ),
     QuizQuestion(
-      question: '3) Which sentence uses future perfect correctly?',
+      question: "Which of these sentences describes an action that will be complete before another future moment?",
       options: [
-        'a) They will have completed the project before the deadline.',
-        'b) They will completed the project before the deadline.',
-        'c) They will completing the project before the deadline.',
-        'd) They will has completed the project before the deadline.',
+        "a) I am writing the code.",
+        "b) I will write the code.",
+        "c) I wrote the code.",
+        "d) I will have written the code.",
       ],
-      correctOptionIndex: 0,
+      correctOptionIndex: 3,
     ),
     QuizQuestion(
-      question: '4) Correct form: "By 10 AM, we _____ breakfast."',
-      options: [
-        'a) will have eaten',
-        'b) will eating',
-        'c) will ate',
-        'd) will have eat',
-      ],
-      correctOptionIndex: 0,
-    ),
-    QuizQuestion(
-      question: '5.1 What will you have achieved by the end of this year?',
-      correctTextAnswer: 'By the end of this year, I will have completed my final project.',
+      question: "Rewrite the following sentence using Future Perfect Tense:\nShe submits the final assignment before midnight.",
+      correctTextAnswer: "She will have submitted the final assignment before midnight",
       isTextAnswer: true,
     ),
     QuizQuestion(
-      question: '5.2 Make a prediction using future perfect.',
-      correctTextAnswer: 'By 2030, humans will have traveled to Mars.',
+      question: "Explain one use of the Future Perfect Tense in a real-life computing scenario. Give an example.",
+      correctTextAnswer: "The Future Perfect Tense can be used to describe an action that will be completed before a future deadline. For example: 'By the time the system goes live, the QA team will have tested all major features.'",
       isTextAnswer: true,
     ),
   ],

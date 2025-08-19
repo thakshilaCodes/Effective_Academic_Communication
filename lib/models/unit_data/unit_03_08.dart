@@ -2,111 +2,97 @@ import '../unit_model.dart';
 
 final UnitModel unit3_8 = UnitModel(
   unitIndex: 13,
-  unitName: "Simple Future Tense",
+  unitName: "Simple Future",
   introductionText: """
-Welcome to the Simple Future Tense lesson! This tense is all about expressing actions that will happen later.
-
-The simple future is essential when we want to talk about predictions, plans, promises, or decisions made at the moment of speaking. Let's explore how to express the future with confidence!
-
-Lesson Objectives
-By the end of this lesson, you should be able to:
-1. Understand the concept of simple future tense for upcoming actions.
-2. Learn the structure: Subject + will/shall + base verb.
-3. Use simple future for predictions, promises, and spontaneous decisions.
-4. Differentiate between using 'will' and other future forms (like going to).
-  """,
+Hello everyone, welcome back!
+In today’s lesson, we will explore the simple future tense, one of the essential tenses in English that helps you talk about actions or events that will happen in the future. The simple future tense is commonly used in spoken English to express plans, predictions, and spontaneous decisions.
+By the end of this lesson, you will be able to:
+1.	Understand the simple future tense and its uses in spoken English.
+2.	Form sentences correctly using "will" and "be going to."
+3.	Use the simple future tense in real-life conversations with confidence.
+""",
 
   preClassActivityDescription: """
-🎥 Watch this video explaining how to form and use simple future tense with real-life examples.
-  """,
+Before we begin, let's have some fun predicting the future!
 
-  preClassActivityVideo: "https://www.youtube.com/watch?v=qBv9UqF5dC8",
+Think about the future of technology, the world, or your personal life.
+
+Write 05 sentences predicting what might happen using the simple future tense. 
+Example: In 2050, robots will do most of our jobs.""",
+
+  preClassActivityUploadLink: "https://courseweb.sliit.lk/mod/forum/view.php?id=375176",
 
   practiceActivityDescription1: """
-Step 1: Write 10 sentences about things you will do tomorrow.
-Step 2: Include plans, promises, and predictions (e.g., "I will call my friend," "It will rain tomorrow").
-Step 3: Create a dialogue where two friends make weekend plans.
-Step 4: Upload your sentences and dialogue.
-  """,
-  practiceActivityLink: "https://example.com/simple-future-scenarios",
-  practiceUploadLink: "https://example.com/upload-simple-future",
+Imagine that you are an AI developer in the future. Your task is to describe how technology will change in the next 10 years using the simple future tense.
+
+Follow the steps given:
+
+Choose a technology-related topic (e.g., Artificial Intelligence, Space Travel, Smart Cities).
+
+Click on My Tech Future! (You will  need to log in from your SLIIT email address)
+
+Choose a sticky note from the tools given at the bottom of the page.
+
+Write a paragraph of about 5-8 sentences using the simple future tense to describe future advancements.
+
+Example: In the future, AI will be able to create entire programs without human help.""",
+
+  practiceActivityLink:"https://whiteboard.office.com/me/whiteboards",
 
   practiceActivityDescription2: """
-Practice future tense predictions and promises.
-Step 1: Access the interactive exercises below.
-Step 2: Complete the fill-in-the-blank and sentence transformation activities.
-Step 3: Upload screenshots of your completed exercises.
-  """,
-  practiceActivityLink2: "https://www.liveworksheets.com/w/en/english-second-language-esl/216455",
-  practiceUploadLink2: "https://example.com/upload-simple-future2",
+Fill the blanks!
+Click on the link below and complete the given quiz.""",
+
+  practiceActivityLink2: "https://www.liveworksheets.com/worksheet/en/english-second-language-esl/1534091",
+  practiceUploadLink2: "https://courseweb.sliit.lk/mod/assign/view.php?id=375177",
 
   instructionsText: """
-Watch the lesson carefully on how 'will' is used for the future. Notice how native speakers also use 'going to' for planned actions. Focus on when to use each form.
-  """,
+Before we attempt the activities, watch the video lesson on how to use the simple future tense in spoken English. Pay close attention to how “will” and “be going to” are used in different situations. Take notes while watching to reinforce your learning.""",
 
-  instructionVideoId: "5sLx5J_WbB8",
+  instructionVideoId: "https://lecturecapture.sliit.lk/eplayer.php?id=VW1tdlMwYnJTVV82NzgyOA==",
 
   summary: """
-In this lesson, we learned:
-- Simple future is used for predictions, decisions, and promises.
-- The structure is: Subject + will/shall + base verb.
-- It can be used in both formal and informal speech.
-- Difference between 'will' (spontaneous) and 'going to' (planned).
-  """,
+Great job completing this lesson! You now understand how to use the simple future tense to talk about upcoming events, predictions, and spontaneous decisions. We covered its structure with "will" and "be going to" and explored how these forms are used in spoken English. Through interactive activities, you practiced forming sentences and applying this tense in everyday situations. Keep using the simple future tense in your conversations to improve fluency and confidence. Keep up the great work and see you in the next lesson!""",
 
   inClassActivity: """
-Role-play a scenario where students predict the future of technology, weather, or personal life events using 'will'.
-  """,
+That’s a wrap for this lesson!
+Now that you’ve learned how to use the simple future tense, it’s time to put it into practice. We’ll meet in the classroom to apply what you’ve learned through interactive exercises and discussions. If you have any questions or need clarification, feel free to bring them to class, and the lecturer will be happy to help.
+Looking forward to seeing you there soon!""",
 
   quizQuestions: [
     QuizQuestion(
-      question: '1) Choose the correct sentence in simple future:',
+      question: "Choose the correct sentence using the simple future tense:",
       options: [
-        'a) She will goes to the park tomorrow.',
-        'b) She will go to the park tomorrow.',
-        'c) She goes to the park tomorrow.',
-        'd) She going to the park tomorrow.',
+        "a) I go to the office tomorrow.",
+        "b) I will go to the office tomorrow.",
+        "c) I going to the office tomorrow.",
+        "d) I gone to the office tomorrow.",
       ],
       correctOptionIndex: 1,
     ),
     QuizQuestion(
-      question: '2) Complete: "I think it _____ rain tomorrow."',
+      question: "Which sentence expresses a prediction?",
       options: [
-        'a) will',
-        'b) is',
-        'c) was',
-        'd) are',
+        "a) She will be late because of the traffic.",
+        "b) I am studying English.",
+        "c) He eats lunch every day.",
+        "d) She writes an email now.",
       ],
       correctOptionIndex: 0,
     ),
     QuizQuestion(
-      question: '3) Which is a promise?',
-      options: [
-        'a) I will help you with your homework.',
-        'b) I helped you with your homework.',
-        'c) I am helping you with your homework.',
-        'd) I had helped you with your homework.',
-      ],
-      correctOptionIndex: 0,
-    ),
-    QuizQuestion(
-      question: '4) Correct form: "They _____ arrive at 6 PM."',
-      options: [
-        'a) will',
-        'b) shall',
-        'c) will to',
-        'd) is will',
-      ],
-      correctOptionIndex: 0,
-    ),
-    QuizQuestion(
-      question: '5.1 What will you do next weekend?',
-      correctTextAnswer: 'Next weekend, I will visit my grandparents and spend time with my friends.',
+      question: "Rewrite this sentence in the simple future tense:\nThey play football every Saturday.",
+      correctTextAnswer: "They will play football every Saturday.",
       isTextAnswer: true,
     ),
     QuizQuestion(
-      question: '5.2 Make a prediction about the future of technology.',
-      correctTextAnswer: 'In the future, robots will help us with most household tasks.',
+      question: "Fill in the blank with the correct future tense:\nBefore the end of this year, I ___ (learn) how to code in Python.",
+      correctTextAnswer: "will learn",
+      isTextAnswer: true,
+    ),
+    QuizQuestion(
+      question: "Where do you use the simple future tense? Provide an example sentence to support your answer.",
+      correctTextAnswer: "The simple future tense is used to talk about things that will happen in the future. For example: I will visit my grandparents next weekend.",
       isTextAnswer: true,
     ),
   ],

@@ -4,49 +4,48 @@ final UnitModel unit2_2 = UnitModel(
   unitIndex: 4,
   unitName: "Types of Sentences",
   introductionText: """
-Welcome to Unit 02 – Lesson 02
+Welcome to Unit 2 – Lesson 2
 This lesson will introduce the different types of sentences commonly used in spoken English. Understanding how different sentence types function will help you communicate clearly and effectively. Spoken English relies on a mix of sentence structures to convey meaning, express emotions, and engage in natural conversations. Before diving into the details, reflect on the way you speak. Do you vary your sentences when talking to different people? Recognizing different sentence types will help enhance your communication skills.
 By the end of this lesson, you will be able to:
-- Identify and classify the four main types of sentences in spoken English.
-- Use different sentence structures to enhance fluency and natural speech.
-- Apply sentence variation in conversations to improve engagement and clarity.
+1. Identify and classify the four main types of sentences in spoken English.
+2. Use different sentence structures to enhance fluency and natural speech.
+3. Apply sentence variation in conversations to improve engagement and clarity.
   """,
 
   preClassActivityDescription: """
-1. Click on the given link and watch the short video. 
-2. Listen carefully and identify the sentence types. 
-3. Write down at least one example of each sentence type (Declarative, Interrogative, Imperative, and Exclamatory) from the video.
-Example:
-- Declarative: I love this song.
-- Interrogative: Where did you find this?
-- Imperative: Turn up the volume!
-- Exclamatory: This is amazing!
-4. Submit Your Answers to the given portal
-  """,
+Step 1: Click on the given link and watch the short video. 
+
+Step 2: Listen carefully and identify the sentence types. 
+
+Step 3: Write down at least one example of each sentence type (Declarative, Interrogative, Imperative, and Exclamatory) from the video.""",
 
   preClassActivityVideo: "https://www.youtube.com/watch?v=1t9UHQgtDfU",
 
   preClassQuestions: [
     PreClassQuestion(
-      questionText: 'Write one example of a **Declarative** sentence (e.g., I love this song).',
-      correctAnswer: 'I love this song.',
+      questionText: 'Write one example of a Declarative sentence (e.g. I love this song)',
+      correctAnswer: """Meaning: A sentence that gives information or states a fact.
+      🗣️ It tells something.""",
     ),
     PreClassQuestion(
-      questionText: 'Write one example of an **Interrogative** sentence (e.g., Where did you find this?).',
-      correctAnswer: 'Where did you find this?',
+      questionText: 'Write one example of an Interrogative sentence (e.g. Where did you find this?)',
+      correctAnswer: """Meaning: A sentence that asks a question.
+      🗣️ It wants to know something.""",
     ),
     PreClassQuestion(
-      questionText: 'Write one example of an **Imperative** sentence (e.g., Turn up the volume!).',
-      correctAnswer: 'Turn up the volume!',
+      questionText: 'Write one example of an Imperative sentence (e.g. Turn up the volume!)',
+      correctAnswer: """Meaning: A sentence that gives a command, instruction, or request.
+      🗣️ It tells someone to do something.""",
     ),
     PreClassQuestion(
-      questionText: 'Write one example of an **Exclamatory** sentence (e.g., This is amazing!).',
-      correctAnswer: 'This is amazing!',
+      questionText: 'Write one example of an Exclamatory sentence (e.g. This is amazing!)',
+      correctAnswer: """Meaning: A sentence that shows strong feeling or emotion.
+      🗣️ It expresses surprise, joy, anger, or excitement.""",
     ),
   ],
 
   practiceActivityDescription1: """
-Now that you have an understanding of sentence types, let’s practice converting one type of sentence into another
+Now that you have an understanding of sentence types, let’s practice converting one type of sentence into another.
   """,
 
   practiceActivityQuestions1: [
@@ -89,35 +88,32 @@ Now that you have an understanding of sentence types, let’s practice convertin
   ],
 
   practiceActivityDescription2: """
-Please follow the instructions given. 
-Step 01: Use ChatGPT voice mode.
-Step 02: Have a conversation with ChatGPT on any of the given topics. Make sure you use all the types of sentences we have learnt so far in your conversation. 
-- A conversation about a movie/TV series you have watched
+Step 1: Use ChatGPT voice mode.
+
+Step 2: Have a conversation with ChatGPT on any of the given topics. Make sure you use all the types of sentences we have learnt so far in your conversation. 
+- A conversation about a movie/TV series you have watched.
 - A conversation planning a trip. 
 - A conversation on the development of AI.
-Step 03: Take a Screenshot/Screenshots of your conversation and submit it here! 
-  """,
 
-  practiceUploadLink2: "https://example.com/upload-practice-activity",
+Step 3: Take a Screenshot/Screenshots of your conversation and submit it!""",
+
+  practiceUploadLink2: "https://courseweb.sliit.lk/mod/assign/view.php?id=374535",
 
   instructionsText: """
-You will now watch a video lesson on Word Order. Make sure you go through the whole lesson to understand how to implement word order in spoken language. Take down notes where necessary. Enjoy!
-  """,
+You will now watch a video lesson on Word Order. Make sure you go through the whole lesson to understand how to implement word order in spoken language. Take down notes where necessary. Enjoy!""",
 
-  instructionVideoId: "8laYlyAFd0o",
+  instructionVideoId: "https://lecturecapture.sliit.lk/eplayer.php?id=OXF6NWVkczR4dF82NzgyMw==",
 
   summary: """
-In this lesson, we explored the four types of sentences and their importance in communication. Understanding sentence types helps in structuring messages clearly and effectively. Keep practicing by identifying different sentence types in daily conversations and writing exercises.
-  """,
+In this lesson, we explored the four types of sentences and their importance in communication. Understanding sentence types helps in structuring messages clearly and effectively. Keep practicing by identifying different sentence types in daily conversations and writing exercises.""",
 
   inClassActivity: """
 Step into the classroom and dive deeper into the different types of sentences! This is a great opportunity to apply what you've learned and clarify any questions directly with your lecturer. 
-Don't miss out—see you there!
-  """,
+Don't miss out—see you there!""",
 
   quizQuestions: [
     QuizQuestion(
-      question: '1. Which sentence is interrogative?',
+      question: 'Which sentence is interrogative?',
       options: [
         'a) She is a great singer.',
         'b) Did you see that movie?',
@@ -127,7 +123,7 @@ Don't miss out—see you there!
       correctOptionIndex: 1,
     ),
     QuizQuestion(
-      question: '2. What punctuation mark typically ends an imperative sentence?',
+      question: 'What punctuation mark typically ends an imperative sentence?',
       options: [
         'a) Period (.)',
         'b) Exclamation mark (!)',
@@ -137,7 +133,7 @@ Don't miss out—see you there!
       correctOptionIndex: 0,
     ),
     QuizQuestion(
-      question: '3. Choose the exclamatory sentence:',
+      question: 'Choose the exclamatory sentence:',
       options: [
         'a) How did you solve this problem?',
         'b) I am going to the library.',
@@ -147,12 +143,12 @@ Don't miss out—see you there!
       correctOptionIndex: 2,
     ),
     QuizQuestion(
-      question: '4. Rearrange the words to form a correct imperative sentence:\nhelp / me / please / this / with / assignment',
+      question: 'Rearrange the words to form a correct imperative sentence:\nhelp / me / please / this / with / assignment',
       correctTextAnswer: 'Please help me with this assignment.',
       isTextAnswer: true,
     ),
     QuizQuestion(
-      question: '5. Define a declarative sentence and provide an example:',
+      question: 'Define a declarative sentence and provide an example:',
       correctTextAnswer: 'A declarative sentence states a fact or opinion. Example: The sky is blue.',
       isTextAnswer: true,
     ),

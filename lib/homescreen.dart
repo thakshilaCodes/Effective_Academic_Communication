@@ -310,101 +310,130 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(5),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Select a Lesson',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black87),
+        return Container(
+          // Calculate maximum height to avoid overlap with bottom app bar
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.75,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Handle bar for dragging
+              Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(2),
                 ),
-                ...subunits.map<Widget>((subunit) {
-                  int subIndex = subunits.indexOf(subunit);
-                  bool isUnlocked = _isSubunitUnlocked(unitIndex, subIndex);
-                  bool isCompleted = _isSubunitCompleted(subunit['unitIndex']);
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  'Select a Lesson',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                ),
+              ),
+              Flexible(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    left: 5,
+                    right: 5,
+                    bottom: MediaQuery.of(context).padding.bottom + 20, // Add bottom padding
+                  ),
+                  child: Column(
+                    children: subunits.map<Widget>((subunit) {
+                      int subIndex = subunits.indexOf(subunit);
+                      bool isUnlocked = _isSubunitUnlocked(unitIndex, subIndex);
+                      bool isCompleted = _isSubunitCompleted(subunit['unitIndex']);
 
-                  return ListTile(
-                    leading: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: isCompleted
-                                ? Colors.green
-                                : isUnlocked
-                                ? const Color(0xFF010066)
-                                : Colors.grey,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Center(
-                            child: isCompleted
-                                ? Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Text(
+                      return ListTile(
+                        leading: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: isCompleted
+                                    ? Colors.green
+                                    : isUnlocked
+                                    ? const Color(0xFF010066)
+                                    : Colors.grey,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Center(
+                                child: isCompleted
+                                    ? Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Text(
+                                      '$subIndex',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                                    : Text(
                                   '$subIndex',
                                   style: const TextStyle(
                                     color: Colors.white,
-                                    fontSize: 10,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ],
-                            )
-                                : Text(
-                              '$subIndex',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
+                            const SizedBox(width: 8),
+                            Icon(
+                              isCompleted
+                                  ? Icons.check_circle
+                                  : isUnlocked
+                                  ? Icons.play_circle_outline
+                                  : Icons.lock,
+                              color: isCompleted
+                                  ? Colors.green
+                                  : isUnlocked
+                                  ? const Color(0xFF010066)
+                                  : Colors.grey,
+                            ),
+                          ],
+                        ),
+                        title: Text(
+                          subunit['name'],
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: isUnlocked ? Colors.black : Colors.grey,
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        Icon(
-                          isCompleted
-                              ? Icons.check_circle
-                              : isUnlocked
-                              ? Icons.play_circle_outline
-                              : Icons.lock,
-                          color: isCompleted
-                              ? Colors.green
-                              : isUnlocked
-                              ? const Color(0xFF010066)
-                              : Colors.grey,
-                        ),
-                      ],
-                    ),
-                    title: Text(
-                      subunit['name'],
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: isUnlocked ? Colors.black : Colors.grey,
-                      ),
-                    ),
-                    trailing: isUnlocked
-                        ? const Icon(Icons.arrow_forward_ios_rounded, size: 12)
-                        : const Icon(Icons.lock, size: 12, color: Colors.grey),
-                    onTap: isUnlocked
-                        ? () {
-                      Navigator.pop(context);
-                      _navigateToScreen(unitIndex, subIndex);
-                    }
-                        : () => _showLockedDialog(),
-                  );
-
-                }).toList(),
-              ],
-            ),
+                        trailing: isUnlocked
+                            ? const Icon(Icons.arrow_forward_ios_rounded, size: 12)
+                            : const Icon(Icons.lock, size: 12, color: Colors.grey),
+                        onTap: isUnlocked
+                            ? () {
+                          Navigator.pop(context);
+                          _navigateToScreen(unitIndex, subIndex);
+                        }
+                            : () => _showLockedDialog(),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },

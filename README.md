@@ -47,6 +47,23 @@ Here are some previews of the app in action:
 <p align="center">
 <img src="screenshots/welcome.jpg" width="230" alt="Welcome"/>
   <img src="screenshots/home.jpg" width="230" alt="Home"/>
+<img src="screenshots/home_lesson.jpg" width="230" alt="Home Lesson"/>
+</p>
+<p align="center">
+<img src="screenshots/intro.jpg" width="230" alt="Introduction"/>
+  <img src="screenshots/preclass_activity.jpg" width="230" alt="Pre Class Activity"/>
+<img src="screenshots/instructions.jpg" width="230" alt="Instructions"/>
+</p>
+
+<p align="center">
+<img src="screenshots/practice_activity.jpg" width="230" alt="Practice Activity 1"/>
+  <img src="screenshots/practice_activity2.jpg" width="230" alt="Practice Activity 2"/>
+<img src="screenshots/done.jpg" width="230" alt="Done"/>
+
+</p>
+<p align="center">
+<img src="screenshots/quiz.jpg" width="230" alt="Quiz"/>
+ 
 
 </p>
 
